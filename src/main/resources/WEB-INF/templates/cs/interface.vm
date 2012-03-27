@@ -1,0 +1,36 @@
+#* @vtlvariable name="typeDescriptor" type="org.fluffnstuff.asdoclet.generator.velocity.TypeDescriptor" *#
+#parse("templates/cs/macros.vm")
+#*
+	INTERFACE
+*#
+namespace $typeDescriptor.nameSpace {
+#region AsDoclet generated code
+#if($typeDescriptor.description)	/**
+	 * <summary>
+	 * $typeDescriptor.description
+	 * </summary>
+	 */
+#end
+#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#end
+	public interface $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+#foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
+		#modifiers($propertyDescriptor, '')#property($propertyDescriptor) { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
+#end
+#if($typeDescriptor.propertyDescriptors.size() > 0)
+
+#end
+#foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
+#if($methodDescriptor.description)		/**
+		 * <summary>
+		 * $methodDescriptor.description
+		 * </summary>
+		 */
+#end
+#foreach($annotation in $methodDescriptor.annotations)      [$annotation.name]
+#end
+		#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
+#end
+	}
+#endregion
+}
