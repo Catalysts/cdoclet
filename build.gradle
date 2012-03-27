@@ -8,6 +8,10 @@ repositories {
     }
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-9'
+}
+
 dependencies {
 	compile 'ch.qos.logback:logback-classic:1.0.0'
 	compile 'org.apache.velocity:velocity:1.7'
