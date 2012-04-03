@@ -1,0 +1,45 @@
+#* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
+#parse("templates/cs/macros.vm")
+#*
+	PROXY
+*#
+namespace $typeDescriptor.nameSpace {
+#region CDoclet generated code
+#if($typeDescriptor.description)	/**
+	 * <summary>
+	 * $typeDescriptor.description
+	 * </summary>
+	 */
+#end
+#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#end
+	public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+        protected virtual object DispatchCall(System.Type type, string methodName, params object[] args) {
+            return null;
+        }
+
+        protected virtual void BeginDispatchCall(System.Type type, string methodName, object async, params object[] args) {
+        }
+
+#foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
+#if($methodDescriptor.description)		/**
+		 * <summary>
+		 * $methodDescriptor.description
+		 * </summary>
+		 */
+#end
+		#modifiers($methodDescriptor, 'virtual')public #method($methodDescriptor) {
+#if($methodDescriptor.async)#if($methodDescriptor.callbackType.qualifiedTypeName == "void")
+			BeginDispatchCall(typeof(object), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+#else
+			BeginDispatchCall(typeof(#type($methodDescriptor.callbackType)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+#end#else#if($methodDescriptor.qualifiedTypeName == "void")
+			DispatchCall(typeof(object), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+#else
+			return (<#type($methodDescriptor)>) DispatchCall(typeof<#type($methodDescriptor)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+#end#end
+		}
+#end
+	}
+#endregion
+}
