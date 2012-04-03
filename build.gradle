@@ -19,7 +19,7 @@ dependencies {
 	compile 'org.slf4j:slf4j-api:1.6.4'
 	
 	// TODO, this is not nice, but required due to http://issues.gradle.org/browse/GRADLE-1477
-	compile files("${System.getProperty('java.home')}/lib/tools.jar")
+	compile files("${System.getProperty('java.home')}/../lib/tools.jar")
 	
 	compile 'metaas:metaas:1.0.1'
 }
