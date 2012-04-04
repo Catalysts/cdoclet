@@ -1,25 +1,90 @@
-apply plugin: 'eclipse'
+import org.gradle.api.XmlProvider
+import org.gradle.api.artifacts.maven.MavenDeployment
+
 apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+group = 'cc.catalysts'
+version = '2.0.0'
 
 repositories {
 	mavenCentral()
-	flatDir {
-        dirs 'lib'
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-9'
 }
 
 dependencies {
-	compile 'ch.qos.logback:logback-classic:1.0.0'
-	compile 'org.apache.velocity:velocity:1.7'
-
-	compile 'org.slf4j:slf4j-api:1.6.4'
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.0.0'
+	compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.6.4'
+	compile group: 'cc.catalysts', name: 'metaas', version: '0.9'
 	
-	// TODO, this is not nice, but required due to http://issues.gradle.org/browse/GRADLE-1477
+	// TODO: this is not nice, but required due to http://issues.gradle.org/browse/GRADLE-1477
 	compile files("${System.getProperty('java.home')}/../lib/tools.jar")
-	
-	compile 'metaas:metaas:1.0.1'
+}
+
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+task groovydocJar(type: Jar, dependsOn: groovydoc) {
+	classifier = 'javadoc'
+	from 'build/docs/groovydoc'
+}
+
+artifacts {
+	archives jar
+	archives sourcesJar
+	archives groovydocJar
+}
+
+signing {
+	sign configurations.archives
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.0-milestone-9'
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+			
+			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+				authentication(userName: sonatypeUsername, password: sonatypePassword)
+			}
+			
+			pom.project {
+				name 'cdoclet'
+				packaging 'jar'
+				description 'CDoclet can be used to generate files out of Java sources into other languages like Actionscript or C#'
+				url 'https://github.com/Catalysts/cdoclet'
+				
+				scm {
+					url 'scm:git@github.com:Catalysts/cdoclet.git'
+					connection 'scm:git@github.com:Catalysts/cdoclet.git'
+					developerConnection 'scm:git@github.com:Catalysts/cdoclet.git'
+				}
+				
+				licenses {
+					license {
+						name 'The Apache Software License, Version 2.0'
+						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+						distribution 'repo'
+					}
+				}
+				
+				developers {
+					developer {
+						id 'haraldradi'
+						name 'Harald Radi'
+					}
+				}
+			}
+		}
+	}
 }
