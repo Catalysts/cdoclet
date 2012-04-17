@@ -111,11 +111,11 @@ public class CDoclet {
 			}
 		}
 
-		if ("actionscript".equals(generator)) {
+		if (Languages.ACTIONSCRIPT.equals(generator)) {
 			return new AsGenerator(destination, namespace, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
-		} else if ("cs".equals(generator)) {
+		} else if (Languages.CSHARP.equals(generator)) {
 			return new VelocityGenerator(destination, namespace, Languages.CSHARP, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
-		} else if ("java".equals(generator)) {
+		} else if (Languages.JAVA.equals(generator)) {
 			return new VelocityGenerator(destination, namespace, Languages.JAVA, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
 		}
 		return null;

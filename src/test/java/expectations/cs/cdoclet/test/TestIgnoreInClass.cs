@@ -9,7 +9,7 @@ namespace cdoclet.test {
 	 */
 	public class TestIgnoreInClass<T> : cdoclet.test.TestIgnoreInClassBase<T> {
 		private T test;
-		public virtual T Test { get { return this.test; } set { this.test = value; } }
+		public override T Test { get { return this.test; } set { this.test = value; } }
 	}
 #endregion
 }
