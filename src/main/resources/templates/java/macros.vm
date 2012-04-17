@@ -6,25 +6,30 @@
 #foreach($arg in $descriptor.bounds.keySet()) where $arg : #type($descriptor.bounds.get($arg))#end
 #end
 #macro(generics $type)
-#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#type($type.bounds.get("?"))#else#type($argument)#end#end>#end
+#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#type($type.bounds.get("?"))#else#type($argument)#end#foreach($arg in $type.bounds.keySet())#if($arg == $argument) extends #type($type.bounds.get($arg))#end#end#end>#end
 #end
 #macro(type $type)
 $type.name#generics($type)#dimensions($type.dimensions)
 #end
 #macro(implements $descriptor)
-#if($descriptor.superClass) : #type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) : #{else}, #end#type($interface)#end#end
+#if($descriptor.superClass) extends #type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) implements #{else}, #end#type($interface)#end#end
+#end
+#macro(extends $descriptor)
+#if($descriptor.superClass) implements #type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) extends #{else}, #end#type($interface)#end#end
 #end
 #macro(params $descriptor)
 #foreach($parameterDescriptor in $descriptor.parameterDescriptors)#if($velocityCount>1), #end#type($parameterDescriptor) $parameterDescriptor.parameterName#end
 #end
 #macro(method $descriptor)
-#type($descriptor) ${descriptor.upperMethodName}#generics($descriptor.genericType)(#params($descriptor))#bounds($descriptor.genericType)
+#type($descriptor) ${descriptor.methodName}#generics($descriptor.genericType)(#params($descriptor))#bounds($descriptor.genericType)
 #end
-#macro(property $descriptor)
-#type($descriptor) ${descriptor.propertyName}#generics($descriptor.genericType)#bounds($descriptor.genericType)
+#macro(property $descriptor $preamble)
+#type($descriptor) $preamble${descriptor.propertyName}#generics($descriptor.genericType)#bounds($descriptor.genericType)
 #end
-#macro(modifiers $descriptor $default)
+#macro(modifiers $descriptor)
 #foreach($annotation in $descriptor.annotations)[$annotation.name]
-		#end
-#if($descriptor.modifier != "")$descriptor.modifier #end#if($descriptor.override)override #elseif($default != "")$default #end
+	#end
+#if($descriptor.override)@Override#end
+
+	#if($descriptor.modifier != "")$descriptor.modifier #end
 #end

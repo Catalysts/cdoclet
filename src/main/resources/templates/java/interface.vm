@@ -3,28 +3,28 @@
 #*
 	INTERFACE
 *#
-package $typeDescriptor.nameSpace {
-#if($typeDescriptor.description)	/**
-	 * $typeDescriptor.description
-	 */
+package $typeDescriptor.nameSpace;
+#if($typeDescriptor.description)/**
+ * $typeDescriptor.description
+ */
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public interface $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+public interface $typeDescriptor.typeName#generics($typeDescriptor)#extends($typeDescriptor) {
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
-		#modifiers($propertyDescriptor, '')#property($propertyDescriptor) { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
+	#modifiers($propertyDescriptor, '')#property($propertyDescriptor, "") { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
+
 #end
 #if($typeDescriptor.propertyDescriptors.size() > 0)
 
 #end
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
-#if($methodDescriptor.description)		/**
-		 * $methodDescriptor.description
-		 */
+#if($methodDescriptor.description)	/**
+	 * $methodDescriptor.description
+	 */
 #end
 #foreach($annotation in $methodDescriptor.annotations)      [$annotation.name]
 #end
-		#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
+	#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
 #end
-	}
 }

@@ -4,8 +4,8 @@
 	<comment/>
 	<projects/>
 	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 	<buildSpec>
 		<buildCommand>

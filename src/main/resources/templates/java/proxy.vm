@@ -3,8 +3,7 @@
 #*
 	PROXY
 *#
-namespace $typeDescriptor.nameSpace {
-#region CDoclet generated code
+package $typeDescriptor.nameSpace;
 #if($typeDescriptor.description)	/**
 	 * <summary>
 	 * $typeDescriptor.description
@@ -41,5 +40,4 @@ namespace $typeDescriptor.nameSpace {
 		}
 #end
 	}
-#endregion
 }

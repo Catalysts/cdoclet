@@ -3,8 +3,7 @@
 #*
 	ENUM
 *#
-namespace $typeDescriptor.nameSpace {
-#region CDoclet generated code
+package $typeDescriptor.nameSpace;
 #if($typeDescriptor.description)	/**
 	 * <summary>
 	 * $typeDescriptor.description
@@ -18,5 +17,4 @@ namespace $typeDescriptor.nameSpace {
 		$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end#end
 
 	}
-#endregion
 }

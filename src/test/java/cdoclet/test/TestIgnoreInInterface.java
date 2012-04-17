@@ -1,7 +1,8 @@
 package cdoclet.test;
 
 /**
- * @actionscript.class
+ * @java.class
+ * @as.class
  * @cs.class
  */
 public interface TestIgnoreInInterface<T> extends TestIgnoreInInterfaceBase<T> {

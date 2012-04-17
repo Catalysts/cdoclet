@@ -3,34 +3,48 @@
 #*
 	CLASS
 *#
-namespace $typeDescriptor.nameSpace {
-#region CDoclet generated code
-#if($typeDescriptor.description)	/**
-	 * $typeDescriptor.description
-	 */
+package $typeDescriptor.nameSpace;
+#if($typeDescriptor.description)/**
+ * $typeDescriptor.description
+ */
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
-#if($fieldDescriptor.description)		/**
-		 * $fieldDescriptor.description
-		 */
+#if($fieldDescriptor.description)	/**
+	 * $fieldDescriptor.description
+	 */
 #end
-		#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+	#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
-		#modifiers($propertyDescriptor, 'virtual')#property($propertyDescriptor) {#if($propertyDescriptor.getter) get { return this.$propertyDescriptor.fieldName; }#end#if($propertyDescriptor.setter) set { this.$propertyDescriptor.fieldName = value; }#end }
+#if($propertyDescriptor.getter)
+	
+	#modifiers($propertyDescriptor)#property($propertyDescriptor, "get")() {
+		return this.$propertyDescriptor.fieldName;
+	}
+#end
+#if($propertyDescriptor.setter)
+	
+	#modifiers($propertyDescriptor)#property($propertyDescriptor, "set")(#type($propertyDescriptor) value) {
+		this.$propertyDescriptor.fieldName = value;
+	}
+#end
+#if(!$propertyDescriptor.getter && !$propertyDescriptor.setter)
+	
+	#modifiers($propertyDescriptor)#property($propertyDescriptor, "")() {
+	}
+#end
+	
 #end
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
-#if($methodDescriptor.description)		/**
-		 * $methodDescriptor.description
-		 */
+#if($methodDescriptor.description)	/**
+	 * $methodDescriptor.description
+	 */
 #end
-		#modifiers($methodDescriptor, '')#method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
+	#modifiers($methodDescriptor)#method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
 #else{}
 #end
 #end
-	}
-#endregion
 }

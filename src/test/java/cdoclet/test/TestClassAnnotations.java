@@ -1,7 +1,8 @@
 package cdoclet.test;
 
 /**
- * @actionscript.class annotation=Bindable
+ * @java.class
+ * @as.class annotation=Bindable
  * @cs.class annotation=System.Serializable
  */
 @Deprecated

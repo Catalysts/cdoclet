@@ -350,7 +350,7 @@ public class AsGenerator implements Generator {
 
 	
 	public String getName() {
-		return "actionscript";
+		return "as";
 	}
 
 	

@@ -1,7 +1,8 @@
 package cdoclet.test;
 
 /**
- * @actionscript.class
+ * @java.class
+ * @as.class
  * @cs.class
  */
 public class TestOverrideClassBase<T> implements TestOverrideInterface<T> {

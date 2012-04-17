@@ -2,7 +2,7 @@ package cdoclet.test;
 
 /**
  * @java.class
- * @actionscript.class
+ * @as.class
  * @cs.class
  */
 public class TestException extends Exception {
