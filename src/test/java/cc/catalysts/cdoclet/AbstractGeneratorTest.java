@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import cc.catalysts.cdoclet.generator.Languages;
+
 import com.sun.tools.javadoc.Main;
 
 @RunWith(Parameterized.class)
@@ -49,10 +51,11 @@ public abstract class AbstractGeneratorTest {
 		
 		File output = new File(getOutputDir() + fileWithoutExt + "." + getLanguage());
 		
-		File expected = new File("src/test/java/expectations/" + getLanguage()+ "/cdoclet/test/" + fileWithoutExt + "." + getLanguage());
+		String suffix = getLanguage().equals(Languages.JAVA) ? ".test":"";
+		File expected = new File("src/test/java/WEB-INF/expectations/" + getLanguage()+ "/cdoclet/test/" + fileWithoutExt + "." + getLanguage() + suffix);
 		
-		Assert.assertTrue("output file " + output.getAbsolutePath() + " does not exist", output.exists());
-		Assert.assertTrue("file " + expected.getName() + " has not been generated", expected.exists());
+		Assert.assertTrue("file " + expected.getAbsolutePath() + " does not exist", expected.exists());
+		Assert.assertTrue("output file " + output.getAbsolutePath() + " has not been generated", output.exists());
 
 		String outputString = FileUtils.readFileToString(output);
 		String expectedString = FileUtils.readFileToString(expected);
