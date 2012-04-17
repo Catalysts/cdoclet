@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import cc.catalysts.cdoclet.generator.AsGenerator;
 import cc.catalysts.cdoclet.generator.Generator;
+import cc.catalysts.cdoclet.generator.Languages;
 import cc.catalysts.cdoclet.generator.VelocityGenerator;
 import cc.catalysts.cdoclet.handler.ClassHandler;
 import cc.catalysts.cdoclet.handler.EnumHandler;
@@ -113,7 +114,9 @@ public class CDoclet {
 		if ("actionscript".equals(generator)) {
 			return new AsGenerator(destination, namespace, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
 		} else if ("cs".equals(generator)) {
-			return new VelocityGenerator(destination, namespace, "cs", enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+			return new VelocityGenerator(destination, namespace, Languages.CSHARP, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+		} else if ("java".equals(generator)) {
+			return new VelocityGenerator(destination, namespace, Languages.JAVA, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
 		}
 		return null;
 	}

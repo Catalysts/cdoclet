@@ -28,7 +28,6 @@ import cc.catalysts.cdoclet.map.TypeMap;
 import com.sun.javadoc.ClassDoc;
 
 public class VelocityGenerator implements Generator {
-	private static final String CSHARP = "cs";
 
 	private Collection<TypeDescriptor> typeDescriptors = new ArrayList<TypeDescriptor>();
 
@@ -68,7 +67,7 @@ public class VelocityGenerator implements Generator {
 	}
 
 	private void initTypeMap() {
-		if (CSHARP.equals(language)) {
+		if (Languages.CSHARP.equals(language)) {
 			initCsTypeMap();
 		}
 	}
@@ -318,7 +317,7 @@ public class VelocityGenerator implements Generator {
 			File folder = new File(this.destination, folderName);
 			folder.mkdirs();
 
-			Writer writer = new FileWriter(new File(folder, descriptor.getTypeName() + ".cs"));
+			Writer writer = new FileWriter(new File(folder, descriptor.getTypeName() + "." + language));
 
 			VelocityContext context = new VelocityContext();
 			String s = descriptor.getTemplate();
@@ -357,7 +356,7 @@ public class VelocityGenerator implements Generator {
 	public void setSuperclass(Type type, boolean exception) {
 		((ClassDescriptor) typeDescriptor).setSuperclass(type);
 
-		if (exception && CSHARP.equals(language)) {
+		if (exception && Languages.CSHARP.equals(language)) {
 			beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
 			addBody(" : base() {}");
 			endMethod(Type.EMPTY);
