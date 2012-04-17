@@ -94,7 +94,9 @@ public class AsGenerator implements Generator {
 		typeMap.addTypeMapping("java.util.List", "Array");
 		typeMap.addTypeMapping("java.util.Map", "Array");
 		typeMap.addTypeMapping("java.util.Set", "Array");
-	}
+
+		typeMap.addTypeMapping("java.lang.Exception", "null");
+}
 
 	public TypeMap getAnnotationMap() {
 		return annotationMap;
