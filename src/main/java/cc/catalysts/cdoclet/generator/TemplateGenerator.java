@@ -27,7 +27,7 @@ import cc.catalysts.cdoclet.map.TypeMap;
 
 import com.sun.javadoc.ClassDoc;
 
-public class VelocityGenerator implements Generator {
+public class TemplateGenerator implements Generator {
 
 	private Collection<TypeDescriptor> typeDescriptors = new ArrayList<TypeDescriptor>();
 
@@ -48,7 +48,7 @@ public class VelocityGenerator implements Generator {
 	private final TypeMap typeMap;
 	private final Class<? extends Annotation> enumAnnotation;
 
-	public VelocityGenerator(String destination, String namespace, String language, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
+	public TemplateGenerator(String destination, String namespace, String language, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
 		this.destination = new File(destination);
 		this.namespace = namespace;
 		this.language = language;
@@ -69,9 +69,30 @@ public class VelocityGenerator implements Generator {
 	private void initTypeMap() {
 		if (Languages.CSHARP.equals(language)) {
 			initCsTypeMap();
+		} else if (Languages.JAVA.equals(language)) {
+			initJavaTypeMap();
 		}
 	}
 
+	private void initJavaTypeMap() {
+		annotationMap.addTypeMapping("java.lang.Deprecated", "Deprecated");
+
+		typeMap.addTypeMapping("java.lang.Boolean", "Boolean");
+		typeMap.addTypeMapping("java.lang.Byte", "Byte");
+		typeMap.addTypeMapping("java.lang.Double", "Double");
+		typeMap.addTypeMapping("java.lang.Float", "Float");
+		typeMap.addTypeMapping("java.lang.Integer", "Integer");
+		typeMap.addTypeMapping("java.lang.Long", "Long");
+		typeMap.addTypeMapping("java.lang.Number", "Number");
+		typeMap.addTypeMapping("java.lang.Short", "Short");
+
+		typeMap.addTypeMapping("java.lang.Class", "Class");
+		typeMap.addTypeMapping("java.lang.Object", "Object");
+		typeMap.addTypeMapping("java.lang.String", "String");
+		typeMap.addTypeMapping("java.lang.Exception", "Exception");
+		typeMap.addTypeMapping("java.lang.Throwable", "Throwable");
+	}
+	
 	private void initCsTypeMap() {
 		annotationMap.addTypeMapping("java.lang.Deprecated", "System.Obsolete");
 
@@ -355,22 +376,48 @@ public class VelocityGenerator implements Generator {
 	
 	public void setSuperclass(Type type, boolean exception) {
 		((ClassDescriptor) typeDescriptor).setSuperclass(type);
-
-		if (exception && Languages.CSHARP.equals(language)) {
-			beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
-			addBody(" : base() {}");
-			endMethod(Type.EMPTY);
-
-			beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
-			addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
-			addBody(" : base(message) {}");
-			endMethod(Type.EMPTY);
-
-			beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
-			addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
-			addParameter(type, Type.EMPTY, GeneratorUtils.getType(Exception.class.getCanonicalName(), this), "exception");
-			addBody(" : base(message, exception) {}");
-			endMethod(Type.EMPTY);
+		
+		if(exception) {
+			if (Languages.CSHARP.equals(language)) {
+				
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addBody(" : base() {}");
+				endMethod(Type.EMPTY);
+	
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
+				addBody(" : base(message) {}");
+				endMethod(Type.EMPTY);
+	
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(Exception.class.getCanonicalName(), this), "exception");
+				addBody(" : base(message, exception) {}");
+				endMethod(Type.EMPTY);
+				
+			} else if (Languages.JAVA.equals(language)) {
+				
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addBody("{\n\t}");
+				endMethod(Type.EMPTY);
+	
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
+				addBody("{\n\t\tsuper(message);\n\t}");
+				endMethod(Type.EMPTY);
+	
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(Throwable.class.getCanonicalName(), this), "cause");
+				addBody("{\n\t\tsuper(cause);\n\t}");
+				endMethod(Type.EMPTY);
+				
+				beginMethod(type, Type.EMPTY, Modifier.PUBLIC, Type.EMPTY, typeDescriptor.getTypeName(), false, false);
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(String.class.getCanonicalName(), this), "message");
+				addParameter(type, Type.EMPTY, GeneratorUtils.getType(Throwable.class.getCanonicalName(), this), "cause");
+				addBody("{\n\t\tsuper(message, cause);\n\t}");
+				endMethod(Type.EMPTY);
+				
+			}
 		}
 	}
 

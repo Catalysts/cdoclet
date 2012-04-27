@@ -9,7 +9,7 @@ package cdoclet.test;
 public class TestClassAnnotations {
 	/**
 	 * @return <code>null</code>
-	 * @actionscript.property annotation=Bindable
+	 * @as.property annotation=Bindable
 	 * @cs.property annotation=System.Serializable
 	 */
 	@Deprecated

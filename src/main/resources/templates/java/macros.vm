@@ -6,6 +6,9 @@
 #foreach($arg in $descriptor.bounds.keySet()) where $arg : #type($descriptor.bounds.get($arg))#end
 #end
 #macro(generics $type)
+#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#type($type.bounds.get("?"))#else#type($argument)#end#foreach($arg in $type.bounds.keySet())#end#end>#end
+#end
+#macro(genericclass $type)
 #if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#type($type.bounds.get("?"))#else#type($argument)#end#foreach($arg in $type.bounds.keySet())#if($arg == $argument) extends #type($type.bounds.get($arg))#end#end#end>#end
 #end
 #macro(type $type)
@@ -21,15 +24,26 @@ $type.name#generics($type)#dimensions($type.dimensions)
 #foreach($parameterDescriptor in $descriptor.parameterDescriptors)#if($velocityCount>1), #end#type($parameterDescriptor) $parameterDescriptor.parameterName#end
 #end
 #macro(method $descriptor)
-#type($descriptor) ${descriptor.methodName}#generics($descriptor.genericType)(#params($descriptor))#bounds($descriptor.genericType)
+#type($descriptor)#if($descriptor.name != "") #end${descriptor.methodName}#generics($descriptor.genericType)(#params($descriptor))#bounds($descriptor.genericType)
 #end
 #macro(property $descriptor $preamble)
-#type($descriptor) $preamble${descriptor.propertyName}#generics($descriptor.genericType)#bounds($descriptor.genericType)
+#type($descriptor) #getset($descriptor, $preamble)#generics($descriptor.genericType)#bounds($descriptor.genericType)
 #end
+#macro(propertyget $descriptor)
+#type($descriptor) #getset($descriptor, "get")#generics($descriptor.genericType)#bounds($descriptor.genericType)
+#end
+#macro(propertyset $descriptor)
+void #getset($descriptor, "set")#generics($descriptor.genericType)#bounds($descriptor.genericType)
+#end
+#macro(getset $descriptor $preamble)
+$preamble${descriptor.propertyName}#end
 #macro(modifiers $descriptor)
-#foreach($annotation in $descriptor.annotations)[$annotation.name]
-	#end
-#if($descriptor.override)@Override#end
+#foreach($annotation in $descriptor.annotations)
+
+	@$annotation.name#end
+#if($descriptor.override)
+
+	@Override#end
 
 	#if($descriptor.modifier != "")$descriptor.modifier #end
 #end

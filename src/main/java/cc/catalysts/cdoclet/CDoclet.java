@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import cc.catalysts.cdoclet.generator.AsGenerator;
 import cc.catalysts.cdoclet.generator.Generator;
 import cc.catalysts.cdoclet.generator.Languages;
-import cc.catalysts.cdoclet.generator.VelocityGenerator;
+import cc.catalysts.cdoclet.generator.TemplateGenerator;
 import cc.catalysts.cdoclet.handler.ClassHandler;
 import cc.catalysts.cdoclet.handler.EnumHandler;
 import cc.catalysts.cdoclet.handler.Handler;
@@ -61,10 +61,10 @@ public class CDoclet {
 
 		ClassDoc[] docs = root.specifiedClasses();
 		if (docs.length == 0) docs = root.classes();
-
+		
 		for (ClassDoc classDoc : docs) {
 			logger.info("Processing {}", classDoc.qualifiedName());
-
+			
 			if (TagParser.hasClassTags(generator, classDoc)) {
 				Handler handler = createHandler(generator, classDoc);
 				handler.process(classDoc);
@@ -113,11 +113,10 @@ public class CDoclet {
 
 		if (Languages.ACTIONSCRIPT.equals(generator)) {
 			return new AsGenerator(destination, namespace, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
-		} else if (Languages.CSHARP.equals(generator)) {
-			return new VelocityGenerator(destination, namespace, Languages.CSHARP, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
-		} else if (Languages.JAVA.equals(generator)) {
-			return new VelocityGenerator(destination, namespace, generator, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+		} else if (Languages.CSHARP.equals(generator) || Languages.JAVA.equals(generator)) {
+			return new TemplateGenerator(destination, namespace, generator, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
 		}
+		
 		return null;
 	}
 

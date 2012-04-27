@@ -8,27 +8,31 @@ package $typeDescriptor.nameSpace;
  * $typeDescriptor.description
  */
 #end
-#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
 public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
+#if(!$typeDescriptor.superClass)
 #if($fieldDescriptor.description)	/**
 	 * $fieldDescriptor.description
 	 */
 #end
 	#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
+#end
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
 #if($propertyDescriptor.getter)
-	
-	#modifiers($propertyDescriptor)#property($propertyDescriptor, "get")() {
-		return this.$propertyDescriptor.fieldName;
+	#modifiers($propertyDescriptor)#propertyget($propertyDescriptor)() {
+	#if($typeDescriptor.superClass)	return super.#getset($propertyDescriptor, "get")();
+#else	return this.$propertyDescriptor.fieldName;
+#end
 	}
 #end
 #if($propertyDescriptor.setter)
-	
-	#modifiers($propertyDescriptor)#property($propertyDescriptor, "set")(#type($propertyDescriptor) value) {
-		this.$propertyDescriptor.fieldName = value;
+	#modifiers($propertyDescriptor)#propertyset($propertyDescriptor)(#type($propertyDescriptor) value) {
+	#if($typeDescriptor.superClass)	super.#getset($propertyDescriptor, "set")(value);
+#else	this.$propertyDescriptor.fieldName = value;
+#end
 	}
 #end
 #if(!$propertyDescriptor.getter && !$propertyDescriptor.setter)
@@ -36,7 +40,6 @@ public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($type
 	#modifiers($propertyDescriptor)#property($propertyDescriptor, "")() {
 	}
 #end
-	
 #end
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
 #if($methodDescriptor.description)	/**

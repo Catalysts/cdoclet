@@ -8,7 +8,7 @@ package cdoclet.test;
 @Deprecated
 public interface TestInterfaceAnnotations {
 	/**
-	 * @actionscript.method annotation=Bindable
+	 * @as.method annotation=Bindable
 	 * @cs.method annotation=System.Serializable
 	 */
 	@Deprecated

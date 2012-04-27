@@ -10,7 +10,7 @@ package $typeDescriptor.nameSpace;
 	 * </summary>
 	 */
 #end
-#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
 	public enum $typeDescriptor.typeName#generics($typeDescriptor)#bounds($typeDescriptor) {#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)#if($velocityCount>1), #end
 

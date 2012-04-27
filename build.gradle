@@ -54,37 +54,39 @@ task wrapper(type: Wrapper) {
 
 uploadArchives {
 	repositories {
-		mavenDeployer {
-			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-			
-			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-				authentication(userName: sonatypeUsername, password: sonatypePassword)
-			}
-			
-			pom.project {
-				name 'cdoclet'
-				packaging 'jar'
-				description 'CDoclet can be used to generate files out of Java sources into other languages like Actionscript or C#'
-				url 'https://github.com/Catalysts/cdoclet'
+		if(project.hasProperty('sonatypeUsername')) {
+			mavenDeployer {
+				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 				
-				scm {
-					url 'scm:git@github.com:Catalysts/cdoclet.git'
-					connection 'scm:git@github.com:Catalysts/cdoclet.git'
-					developerConnection 'scm:git@github.com:Catalysts/cdoclet.git'
+				repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+					authentication(userName: sonatypeUsername, password: sonatypePassword)
 				}
 				
-				licenses {
-					license {
-						name 'The Apache Software License, Version 2.0'
-						url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-						distribution 'repo'
+				pom.project {
+					name 'cdoclet'
+					packaging 'jar'
+					description 'CDoclet can be used to generate files out of Java sources into other languages like Actionscript or C#'
+					url 'https://github.com/Catalysts/cdoclet'
+					
+					scm {
+						url 'scm:git@github.com:Catalysts/cdoclet.git'
+						connection 'scm:git@github.com:Catalysts/cdoclet.git'
+						developerConnection 'scm:git@github.com:Catalysts/cdoclet.git'
 					}
-				}
-				
-				developers {
-					developer {
-						id 'haraldradi'
-						name 'Harald Radi'
+					
+					licenses {
+						license {
+							name 'The Apache Software License, Version 2.0'
+							url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+							distribution 'repo'
+						}
+					}
+					
+					developers {
+						developer {
+							id 'haraldradi'
+							name 'Harald Radi'
+						}
 					}
 				}
 			}

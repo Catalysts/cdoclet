@@ -8,9 +8,9 @@ package $typeDescriptor.nameSpace;
  * $typeDescriptor.description
  */
 #end
-#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
-public interface $typeDescriptor.typeName#generics($typeDescriptor)#extends($typeDescriptor) {
+public interface $typeDescriptor.typeName#genericclass($typeDescriptor)#extends($typeDescriptor) {
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
 	#modifiers($propertyDescriptor, '')#property($propertyDescriptor, "") { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
 
@@ -23,7 +23,7 @@ public interface $typeDescriptor.typeName#generics($typeDescriptor)#extends($typ
 	 * $methodDescriptor.description
 	 */
 #end
-#foreach($annotation in $methodDescriptor.annotations)      [$annotation.name]
+#foreach($annotation in $methodDescriptor.annotations)	@$annotation.name
 #end
 	#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
 #end

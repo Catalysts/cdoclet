@@ -25,6 +25,7 @@ public class TestException extends Exception {
 
 	/**
 	 * @return message
+	 * @java.property ignore=<code>true</code>
 	 * @cs.property ignore=<code>true</code>
 	 */
 	@Override

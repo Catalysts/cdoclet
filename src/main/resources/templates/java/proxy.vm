@@ -10,7 +10,7 @@ package $typeDescriptor.nameSpace;
 	 * </summary>
 	 */
 #end
-#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
 	public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
         protected virtual object DispatchCall(System.Type type, string methodName, params object[] args) {
