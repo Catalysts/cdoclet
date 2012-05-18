@@ -6,10 +6,10 @@ package  cdoclet.test{
 	[RemoteClass(alias="cdoclet.test.TestIgnoreInClass")]
 	public class TestIgnoreInClass extends cdoclet.test.TestIgnoreInClassBase  {
 		private var _test:Object;
-		public function get test():Object {
+		public override function get test():Object {
 			return _test;
 		}
-		public function set test(value:Object):void {
+		public override function set test(value:Object):void {
 			_test=value;
 		}
 	}

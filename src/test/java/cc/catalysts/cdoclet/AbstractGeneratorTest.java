@@ -59,7 +59,7 @@ public abstract class AbstractGeneratorTest {
 
 		String outputString = FileUtils.readFileToString(output);
 		String expectedString = FileUtils.readFileToString(expected);
-		Assert.assertEquals(expected + " does not match", outputString, expectedString);
+		Assert.assertEquals(expected + " does not match", expectedString, outputString);
 	}
 
 

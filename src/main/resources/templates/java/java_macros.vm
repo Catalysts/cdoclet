@@ -1,0 +1,49 @@
+#macro(java_dimensions $dimension)
+#set($foo = $dimension - 1)
+#if($dimension > 0)[]#java_dimensions($foo)#end
+#end
+#macro(java_bounds $descriptor)
+#foreach($arg in $descriptor.bounds.keySet()) where $arg : #java_type($descriptor.bounds.get($arg))#end
+#end
+#macro(java_generics $type)
+#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#java_type($type.bounds.get("?"))#else#java_type($argument)#end#foreach($arg in $type.bounds.keySet())#end#end>#end
+#end
+#macro(java_genericclass $type)
+#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#java_type($type.bounds.get("?"))#else#java_type($argument)#end#foreach($arg in $type.bounds.keySet())#if($arg == $argument) extends #java_type($type.bounds.get($arg))#end#end#end>#end
+#end
+#macro(java_type $type)
+$type.name#java_generics($type)#java_dimensions($type.dimensions)
+#end
+#macro(java_implements $descriptor)
+#if($descriptor.superClass) extends #java_type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #java_type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) implements #{else}, #end#java_type($interface)#end#end
+#end
+#macro(java_extends $descriptor)
+#if($descriptor.superClass) implements #java_type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #java_type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) extends #{else}, #end#java_type($interface)#end#end
+#end
+#macro(java_params $descriptor)
+#foreach($parameterDescriptor in $descriptor.parameterDescriptors)#if($velocityCount>1), #end#java_type($parameterDescriptor) $parameterDescriptor.parameterName#end
+#end
+#macro(java_method $descriptor)
+#java_type($descriptor)#if($descriptor.name != "") #end${descriptor.methodName}#java_generics($descriptor.genericType)(#java_params($descriptor))#java_bounds($descriptor.genericType)
+#end
+#macro(java_property $descriptor $preamble)
+#java_type($descriptor) #java_getset($descriptor, $preamble)#java_generics($descriptor.genericType)#java_bounds($descriptor.genericType)
+#end
+#macro(java_propertyget $descriptor)
+#java_type($descriptor) #java_getset($descriptor, "get")#java_generics($descriptor.genericType)#java_bounds($descriptor.genericType)
+#end
+#macro(java_propertyset $descriptor)
+void #java_getset($descriptor, "set")#java_generics($descriptor.genericType)#java_bounds($descriptor.genericType)
+#end
+#macro(java_getset $descriptor $preamble)
+$preamble${descriptor.propertyName}#end
+#macro(java_modifiers $descriptor)
+#foreach($annotation in $descriptor.annotations)
+
+	@$annotation.name#end
+#if($descriptor.override)
+
+	@Override#end
+
+	#if($descriptor.modifier != "")$descriptor.modifier #end
+#end

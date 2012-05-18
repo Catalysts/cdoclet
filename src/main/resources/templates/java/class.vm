@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/java/macros.vm")
+#parse("templates/java/java_macros.vm")
 #*
 	CLASS
 *#
@@ -10,34 +10,34 @@ package $typeDescriptor.nameSpace;
 #end
 #foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
-public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor) {
+public class $typeDescriptor.typeName#java_generics($typeDescriptor)#java_implements($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
 #if(!$typeDescriptor.superClass)
 #if($fieldDescriptor.description)	/**
 	 * $fieldDescriptor.description
 	 */
 #end
-	#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+	#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #java_type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
 #end
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
 #if($propertyDescriptor.getter)
-	#modifiers($propertyDescriptor)#propertyget($propertyDescriptor)() {
-	#if($typeDescriptor.superClass)	return super.#getset($propertyDescriptor, "get")();
+	#java_modifiers($propertyDescriptor)#java_propertyget($propertyDescriptor)() {
+	#if($typeDescriptor.superClass)	return super.#java_getset($propertyDescriptor, "get")();
 #else	return this.$propertyDescriptor.fieldName;
 #end
 	}
 #end
 #if($propertyDescriptor.setter)
-	#modifiers($propertyDescriptor)#propertyset($propertyDescriptor)(#type($propertyDescriptor) value) {
-	#if($typeDescriptor.superClass)	super.#getset($propertyDescriptor, "set")(value);
+	#java_modifiers($propertyDescriptor)#java_propertyset($propertyDescriptor)(#java_type($propertyDescriptor) value) {
+	#if($typeDescriptor.superClass)	super.#java_getset($propertyDescriptor, "set")(value);
 #else	this.$propertyDescriptor.fieldName = value;
 #end
 	}
 #end
 #if(!$propertyDescriptor.getter && !$propertyDescriptor.setter)
 	
-	#modifiers($propertyDescriptor)#property($propertyDescriptor, "")() {
+	#java_modifiers($propertyDescriptor)#java_property($propertyDescriptor, "")() {
 	}
 #end
 #end
@@ -46,7 +46,7 @@ public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($type
 	 * $methodDescriptor.description
 	 */
 #end
-	#modifiers($methodDescriptor)#method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
+	#java_modifiers($methodDescriptor)#java_method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
 #else{}
 #end
 #end

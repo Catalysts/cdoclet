@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/java/macros.vm")
+#parse("templates/java/java_macros.vm")
 #*
 	INTERFACE
 *#
@@ -10,9 +10,9 @@ package $typeDescriptor.nameSpace;
 #end
 #foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
-public interface $typeDescriptor.typeName#genericclass($typeDescriptor)#extends($typeDescriptor) {
+public interface $typeDescriptor.typeName#java_genericclass($typeDescriptor)#java_extends($typeDescriptor) {
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
-	#modifiers($propertyDescriptor, '')#property($propertyDescriptor, "") { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
+	#java_modifiers($propertyDescriptor, '')#java_property($propertyDescriptor, "") { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
 
 #end
 #if($typeDescriptor.propertyDescriptors.size() > 0)
@@ -25,6 +25,6 @@ public interface $typeDescriptor.typeName#genericclass($typeDescriptor)#extends(
 #end
 #foreach($annotation in $methodDescriptor.annotations)	@$annotation.name
 #end
-	#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
+	#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#java_method($methodDescriptor);
 #end
 }

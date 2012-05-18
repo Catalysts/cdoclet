@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/cs/macros.vm")
+#parse("templates/cs/cs_macros.vm")
 #*
 	PROXY
 *#
@@ -13,7 +13,7 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+	public class $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
         protected virtual object DispatchCall(System.Type type, string methodName, params object[] args) {
             return null;
         }
@@ -28,15 +28,15 @@ namespace $typeDescriptor.nameSpace {
 		 * </summary>
 		 */
 #end
-		#modifiers($methodDescriptor, 'virtual')public #method($methodDescriptor) {
+		#cs_modifiers($methodDescriptor, 'virtual')public #cs_method($methodDescriptor) {
 #if($methodDescriptor.async)#if($methodDescriptor.callbackType.qualifiedTypeName == "void")
 			BeginDispatchCall(typeof(object), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
 #else
-			BeginDispatchCall(typeof(#type($methodDescriptor.callbackType)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+			BeginDispatchCall(typeof(#cs_type($methodDescriptor.callbackType)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
 #end#else#if($methodDescriptor.qualifiedTypeName == "void")
 			DispatchCall(typeof(object), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
 #else
-			return (<#type($methodDescriptor)>) DispatchCall(typeof<#type($methodDescriptor)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
+			return (<#cs_type($methodDescriptor)>) DispatchCall(typeof<#cs_type($methodDescriptor)), "${methodDescriptor.methodName}"#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors), $parameterDescriptor.parameterName#end);
 #end#end
 		}
 #end

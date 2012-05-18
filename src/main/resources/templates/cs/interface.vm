@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/cs/macros.vm")
+#parse("templates/cs/cs_macros.vm")
 #*
 	INTERFACE
 *#
@@ -13,9 +13,9 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public interface $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+	public interface $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
-		#modifiers($propertyDescriptor, '')#property($propertyDescriptor) { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
+		#cs_modifiers($propertyDescriptor, '')#cs_property($propertyDescriptor) { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
 #end
 #if($typeDescriptor.propertyDescriptors.size() > 0)
 
@@ -29,7 +29,7 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $methodDescriptor.annotations)      [$annotation.name]
 #end
-		#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#method($methodDescriptor);
+		#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#cs_method($methodDescriptor);
 #end
 	}
 #endregion

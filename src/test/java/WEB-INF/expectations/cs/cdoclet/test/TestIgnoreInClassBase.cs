@@ -8,6 +8,8 @@ namespace cdoclet.test {
 	 * </summary>
 	 */
 	public class TestIgnoreInClassBase<T> {
+		private T test;
+		public virtual T Test { get { return this.test; } set { this.test = value; } }
 	}
 #endregion
 }

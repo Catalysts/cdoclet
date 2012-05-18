@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/cs/macros.vm")
+#parse("templates/cs/cs_macros.vm")
 #*
 	ENUM
 *#
@@ -13,7 +13,7 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public enum $typeDescriptor.typeName#generics($typeDescriptor)#bounds($typeDescriptor) {#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)#if($velocityCount>1), #end
+	public enum $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_bounds($typeDescriptor) {#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)#if($velocityCount>1), #end
 
 		$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end#end
 

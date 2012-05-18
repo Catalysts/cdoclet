@@ -1,9 +1,9 @@
 package cdoclet.test;
 
 /**
- * @java.class def
- * @as.class asd
- * @cs.class ghi
+ * @java.class
+ * @as.class
+ * @cs.class
  */
 public class TestIgnoreInClass<T> extends TestIgnoreInClassBase<T> {
 // --------------------- Interface TestOverrideInterfaceBase ---------------------

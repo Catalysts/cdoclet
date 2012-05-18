@@ -54,7 +54,7 @@ task wrapper(type: Wrapper) {
 
 uploadArchives {
 	repositories {
-		if(project.hasProperty('sonatypeUsername')) {
+		if(project.hasProperty('sonatypeUsername') && project.hasProperty('teamcity')) {
 			mavenDeployer {
 				beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 				
@@ -89,6 +89,16 @@ uploadArchives {
 						}
 					}
 				}
+			}
+		}
+		if(project.hasProperty('afUrl')) {
+			ivy {
+				credentials {
+					username = afUsername
+					password = afPassword
+				}
+				url afUrl
+				layout 'maven'
 			}
 		}
 	}

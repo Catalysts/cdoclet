@@ -1,5 +1,5 @@
 #* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
-#parse("templates/cs/macros.vm")
+#parse("templates/cs/cs_macros.vm")
 #*
 	CLASS
 *#
@@ -13,7 +13,7 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
 #end
-	public class $typeDescriptor.typeName#generics($typeDescriptor)#implements($typeDescriptor)#bounds($typeDescriptor) {
+	public class $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
 #if($fieldDescriptor.description)		/**
 		 * <summary>
@@ -21,10 +21,10 @@ namespace $typeDescriptor.nameSpace {
 		 * </summary>
 		 */
 #end
-		#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+		#if($fieldDescriptor.modifier == "static")public const#else$fieldDescriptor.modifier#end #cs_type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
-		#modifiers($propertyDescriptor, 'virtual')#property($propertyDescriptor) {#if($propertyDescriptor.getter) get { return this.$propertyDescriptor.fieldName; }#end#if($propertyDescriptor.setter) set { this.$propertyDescriptor.fieldName = value; }#end }
+		#cs_modifiers($propertyDescriptor, 'virtual')#cs_property($propertyDescriptor) {#if($propertyDescriptor.getter) get { return this.$propertyDescriptor.fieldName; }#end#if($propertyDescriptor.setter) set { this.$propertyDescriptor.fieldName = value; }#end }
 #end
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
 #if($methodDescriptor.description)		/**
@@ -33,7 +33,7 @@ namespace $typeDescriptor.nameSpace {
 		 * </summary>
 		 */
 #end
-		#modifiers($methodDescriptor, '')#method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
+		#cs_modifiers($methodDescriptor, '')#cs_method($methodDescriptor) #if($methodDescriptor.body)$methodDescriptor.body
 #else{}
 #end
 #end
