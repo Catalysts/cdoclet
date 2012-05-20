@@ -9,7 +9,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 group = 'cc.catalysts'
-version = '2.0.0'
+version = '2.0.1'
 
 repositories {
 	mavenCentral()
