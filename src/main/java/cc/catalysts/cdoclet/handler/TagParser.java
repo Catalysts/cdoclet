@@ -31,6 +31,7 @@ public class TagParser {
 	}
 
 	public static boolean hasClassTags(Generator generator, ClassDoc classDoc) {
+		if(classDoc == null) return false;
 		Tag[] tags = classDoc.tags(generator.getName() + Constants.TAG_CLASS);
 		return tags.length > 0;
 	}

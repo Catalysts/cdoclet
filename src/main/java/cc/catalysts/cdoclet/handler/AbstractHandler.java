@@ -216,7 +216,16 @@ public abstract class AbstractHandler implements Handler {
 			}
 		}
 	}
-
+	
+	protected void processSuperCommands(Map<String, String> commands) {
+		if (commands.containsKey(Constants.COMMAND_SUPER_CLASS)) {
+			StringTokenizer tokenizer = new StringTokenizer(commands.get(Constants.COMMAND_SUPER_CLASS), ",");
+			while (tokenizer.hasMoreTokens()) {
+				getGenerator().addSuperclass(GeneratorUtils.getType(tokenizer.nextToken(), getGenerator()));
+			}
+		}
+	}
+	
 	protected void processClassComment(ClassDoc classDoc) {
 		StringBuilder description = new StringBuilder();
 		String comment = classDoc.commentText();

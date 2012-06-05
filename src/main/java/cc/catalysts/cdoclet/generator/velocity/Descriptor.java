@@ -8,6 +8,7 @@ import cc.catalysts.cdoclet.generator.Type;
 public class Descriptor extends Type {
 	private String description;
 	private Collection<Type> annotations = new ArrayList<Type>();
+	private Collection<Type> superclass = new ArrayList<Type>();
 
 	public Descriptor(Type type) {
 		super(type.getName(), type.getArguments(), type.getBounds(), type.getDimensions(), type.isGeneric());
@@ -15,6 +16,10 @@ public class Descriptor extends Type {
 
 	public Collection<Type> getAnnotations() {
 		return annotations;
+	}
+	
+	public Collection<Type> getSuperclass() {
+		return superclass;
 	}
 
 	public String getDescription() {
@@ -27,6 +32,10 @@ public class Descriptor extends Type {
 
 	public void addAnnotation(Type annotation) {
 		annotations.add(annotation);
+	}
+	
+	public void addSuperclass(Type tag) {
+		superclass.add(tag);
 	}
 
 	@Override

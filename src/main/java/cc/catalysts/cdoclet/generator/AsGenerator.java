@@ -124,6 +124,8 @@ public class AsGenerator implements Generator {
 		}
 	}
 
+	public void addSuperclass(Type tag) {
+	}
 	
 	public void addBody(String body) {
 	}

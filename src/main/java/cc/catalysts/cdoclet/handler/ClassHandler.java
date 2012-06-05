@@ -31,6 +31,7 @@ public class ClassHandler extends AbstractHandler {
 
 		processAnnotations(classDoc.annotations());
 		processAnnotationCommands(commands);
+		processSuperCommands(commands);
 		processSuperClass(classDoc, ignore);
 		processInterfaces(classDoc, ignore);
 		processClassComment(classDoc);

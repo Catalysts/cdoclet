@@ -9,6 +9,8 @@ import com.sun.javadoc.ClassDoc;
 
 public interface Generator {
 	void addAnnotation(Type annotation);
+	
+	void addSuperclass(Type annotation);
 
 	void addBody(String body);
 

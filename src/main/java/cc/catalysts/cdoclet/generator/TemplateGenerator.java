@@ -157,7 +157,17 @@ public class TemplateGenerator implements Generator {
 			typeDescriptor.addAnnotation(annotation);
 		}
 	}
-
+	
+	public void addSuperclass(Type tag) {
+		if (methodDescriptor != null || proxyMethodDescriptor != null) {
+			if (methodDescriptor != null) methodDescriptor.addSuperclass(tag);
+			if (proxyMethodDescriptor != null) proxyMethodDescriptor.addSuperclass(tag);
+		} else if (propertyDescriptor != null) {
+			propertyDescriptor.addSuperclass(tag);
+		} else {
+			typeDescriptor.addSuperclass(tag);
+		}
+	}
 	
 	public void addBody(String body) {
 		if (methodDescriptor != null) methodDescriptor.addBody(body);

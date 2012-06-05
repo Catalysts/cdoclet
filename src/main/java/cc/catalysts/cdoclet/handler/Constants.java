@@ -18,6 +18,7 @@ final public class Constants {
 	public static final String COMMAND_ANNOTATION = "annotation";
 	public static final String COMMAND_IGNORE = "ignore";
 	public static final String COMMAND_TYPE = "type";
+	public static final String COMMAND_SUPER_CLASS = "superclass";
 
 	public static final String METHOD_ON_RESULT = "onResult";
 	public static final String METHOD_ON_STATUS = "onStatus";
