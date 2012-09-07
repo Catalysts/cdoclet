@@ -26,6 +26,9 @@ import com.sun.javadoc.DocErrorReporter;
 import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class CDoclet {
 	private static final String PARAM_DESTINATION = "-d";
 	private static final String PARAM_NAMESPACE = "-namespace";
