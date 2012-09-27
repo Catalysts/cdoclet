@@ -6,5 +6,7 @@ package cdoclet.test;
  * @cs.class
  */
 public enum TestEnum  {
-    Right, Middle, Left
+    Right,
+    Middle,
+    Left
 }
