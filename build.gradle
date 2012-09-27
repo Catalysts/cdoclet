@@ -9,7 +9,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 group = 'cc.catalysts'
-version = '2.0.1'
+version = '2.0.2'
 
 repositories {
 	mavenCentral()
@@ -49,7 +49,7 @@ signing {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.0-milestone-9'
+	gradleVersion = '1.0'
 }
 
 uploadArchives {
