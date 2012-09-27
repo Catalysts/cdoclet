@@ -4,6 +4,9 @@ import java.lang.reflect.Modifier;
 
 import cc.catalysts.cdoclet.generator.Type;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class FieldDescriptor extends Descriptor {
 	private String fieldName;
 	private Object value;

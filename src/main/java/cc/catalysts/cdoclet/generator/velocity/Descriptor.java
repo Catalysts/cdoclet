@@ -5,6 +5,9 @@ import java.util.Collection;
 
 import cc.catalysts.cdoclet.generator.Type;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class Descriptor extends Type {
 	private String description;
 	private Collection<Type> annotations = new ArrayList<Type>();

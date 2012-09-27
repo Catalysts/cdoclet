@@ -4,6 +4,9 @@ import java.util.Collection;
 
 import cc.catalysts.cdoclet.generator.Type;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class ClassDescriptor extends TypeDescriptor {
 	private Type superClass;
 

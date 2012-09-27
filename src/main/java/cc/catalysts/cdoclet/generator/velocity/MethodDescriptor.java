@@ -5,6 +5,9 @@ import java.util.Collection;
 
 import cc.catalysts.cdoclet.generator.Type;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class MethodDescriptor extends FieldDescriptor {
 	private Collection<ParameterDescriptor> parameterDescriptors = new ArrayList<ParameterDescriptor>();
 	private boolean async;
