@@ -49,7 +49,7 @@ signing {
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.0'
+	gradleVersion = '1.2'
 }
 
 uploadArchives {
