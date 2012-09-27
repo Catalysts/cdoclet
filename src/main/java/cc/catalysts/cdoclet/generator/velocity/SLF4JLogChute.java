@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 import cc.catalysts.cdoclet.CDoclet;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public class SLF4JLogChute implements LogChute {
 	private final Logger logger = LoggerFactory.getLogger(CDoclet.class);
 

@@ -7,6 +7,9 @@ import java.util.Map;
 
 import cc.catalysts.cdoclet.generator.Type;
 
+/**
+ * @author Catalysts Gmbh
+ */
 public abstract class TypeDescriptor extends Descriptor {
 	private Map<String, PropertyDescriptor> propertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
 	private Map<String, FieldDescriptor> fieldDescriptors = new LinkedHashMap<String, FieldDescriptor>();
