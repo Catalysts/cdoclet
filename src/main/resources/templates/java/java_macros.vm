@@ -36,7 +36,8 @@ $type.name#java_generics($type)#java_dimensions($type.dimensions)
 void #java_getset($descriptor, "set")#java_generics($descriptor.genericType)#java_bounds($descriptor.genericType)
 #end
 #macro(java_getset $descriptor $preamble)
-$preamble${descriptor.propertyName}#end
+#if($descriptor.name == "boolean" && $preamble == "get")is${descriptor.propertyName}#else$preamble${descriptor.propertyName}#end
+#end
 #macro(java_modifiers $descriptor)
 #foreach($annotation in $descriptor.annotations)
 
