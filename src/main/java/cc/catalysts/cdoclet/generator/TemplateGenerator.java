@@ -246,7 +246,7 @@ public class TemplateGenerator implements Generator {
 		propertyDescriptor.setDescription(description);
 		typeDescriptor.addPropertyDescriptor(propertyDescriptor);
 
-		if (typeDescriptor instanceof ClassDescriptor) {
+		if (!override && typeDescriptor instanceof ClassDescriptor) {
 			addField(classType, Modifier.PRIVATE, returnType, propertyName, null, description);
 		}
 	}
@@ -287,7 +287,7 @@ public class TemplateGenerator implements Generator {
 		propertyDescriptor.setDescription(description);
 		typeDescriptor.addPropertyDescriptor(propertyDescriptor);
 
-		if (typeDescriptor instanceof ClassDescriptor) {
+		if (!override && typeDescriptor instanceof ClassDescriptor) {
 			addField(classType, Modifier.PRIVATE, returnType, propertyName, null, description);
 		}
 	}

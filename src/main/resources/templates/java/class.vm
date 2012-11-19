@@ -12,7 +12,7 @@ package $typeDescriptor.nameSpace;
 #end
 public class $typeDescriptor.typeName#java_generics($typeDescriptor)#java_implements($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
-#if(!$typeDescriptor.superClass)
+#if(!$fieldDescriptor.override)
 #if($fieldDescriptor.description)	/**
 	 * $fieldDescriptor.description
 	 */
@@ -23,14 +23,14 @@ public class $typeDescriptor.typeName#java_generics($typeDescriptor)#java_implem
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
 #if($propertyDescriptor.getter)
 	#java_modifiers($propertyDescriptor)#java_propertyget($propertyDescriptor)() {
-	#if($typeDescriptor.superClass)	return super.#java_getset($propertyDescriptor, "get")();
+	#if($propertyDescriptor.override)	return super.#java_getset($propertyDescriptor, "get")();
 #else	return this.$propertyDescriptor.fieldName;
 #end
 	}
 #end
 #if($propertyDescriptor.setter)
 	#java_modifiers($propertyDescriptor)#java_propertyset($propertyDescriptor)(#java_type($propertyDescriptor) value) {
-	#if($typeDescriptor.superClass)	super.#java_getset($propertyDescriptor, "set")(value);
+	#if($propertyDescriptor.override)	super.#java_getset($propertyDescriptor, "set")(value);
 #else	this.$propertyDescriptor.fieldName = value;
 #end
 	}

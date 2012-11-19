@@ -8,7 +8,6 @@ namespace cdoclet.test {
 	 * </summary>
 	 */
 	public class TestOverrideClass<T> : cdoclet.test.TestOverrideClassBase<T> {
-		private T test;
 		public override T Test { get { return this.test; } set { this.test = value; } }
 	}
 #endregion
