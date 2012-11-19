@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import com.sun.tools.javadoc.Main;
 public abstract class AbstractGeneratorTest {
 	private static final String inputDirectory = "src/test/java/cdoclet/test/";
 	
-	@Parameters
+	@Parameters(name = "{0}")
  	public static List<Object[]> data() {
  		List<Object[]> input = new ArrayList<Object[]>();
  		for (String file : new File(inputDirectory).list()) {

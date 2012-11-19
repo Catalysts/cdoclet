@@ -24,7 +24,7 @@ dependencies {
 	// TODO: this is not nice, but required due to http://issues.gradle.org/browse/GRADLE-1477
 	compile files("${System.getProperty('java.home')}/../lib/tools.jar")
 	
-	testCompile 'junit:junit:4.10' 
+	testCompile 'junit:junit:4.11'
 	testCompile 'commons-io:commons-io:2.3'
 }
 
@@ -44,9 +44,9 @@ artifacts {
 	archives groovydocJar
 }
 
-signing {
+/*signing {
 	sign configurations.archives
-}
+}*/
 
 task wrapper(type: Wrapper) {
 	gradleVersion = '1.2'
