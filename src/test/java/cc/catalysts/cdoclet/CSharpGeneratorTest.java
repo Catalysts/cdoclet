@@ -25,4 +25,9 @@ public class CSharpGeneratorTest extends AbstractGeneratorTest {
  	protected String getLanguage() {
  		return Languages.CSHARP;
  	}
+
+    @Override
+    protected String getOutputDir() {
+        return "test/results/cs/cdoclet/test/";
+    }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * @java.class
- * @as.class
+ * @actionscript.class
  * @cs.class
  */
 public interface TestProxyInterfaceBase<T extends Date> extends TestProxyInterfaceGeneric {

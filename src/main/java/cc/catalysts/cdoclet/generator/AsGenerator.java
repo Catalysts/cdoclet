@@ -27,6 +27,8 @@ import uk.co.badgersinfoil.metaas.dom.ASMethod;
 import uk.co.badgersinfoil.metaas.dom.ASType;
 import uk.co.badgersinfoil.metaas.dom.Visibility;
 
+import static cc.catalysts.cdoclet.generator.Languages.ACTIONSCRIPT;
+
 public class AsGenerator implements Generator {
 	private static ActionScriptFactory factory = new ActionScriptFactory();
 
@@ -352,7 +354,7 @@ public class AsGenerator implements Generator {
 
 	
 	public String getName() {
-		return "as";
+		return ACTIONSCRIPT;
 	}
 
 	

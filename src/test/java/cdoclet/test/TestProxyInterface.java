@@ -4,7 +4,7 @@ import java.sql.Date;
 
 /**
  * @java.class
- * @as.class proxy=<code>true</code>
+ * @actionscript.class proxy=<code>true</code>
  * @cs.class proxy=<code>true</code> async=<code>true</code> async.callbacktype=AsyncCallback&lt;$type$&gt;
  */
 public interface TestProxyInterface extends TestProxyInterfaceBase<Date> {

@@ -25,4 +25,9 @@ public class JavaGeneratorTest extends AbstractGeneratorTest {
  	protected String getLanguage() {
  		return Languages.JAVA;
  	}
+
+    @Override
+    protected String getOutputDir() {
+        return "test/results/java/cdoclet/test/";
+    }
 }
