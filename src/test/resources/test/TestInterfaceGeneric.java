@@ -8,5 +8,5 @@ import java.util.Date;
  * @cs.class async=<code>false</code>
  */
 public interface TestInterfaceGeneric<A extends Date, B> {
-	void foo(A bar, B baz);
+    void foo(A bar, B baz);
 }

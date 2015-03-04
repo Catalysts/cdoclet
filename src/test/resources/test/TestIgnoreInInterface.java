@@ -6,9 +6,7 @@ package test;
  * @cs.class
  */
 public interface TestIgnoreInInterface<T> extends test.TestIgnoreInInterfaceBase<T> {
-// --------------------- Interface TestOverrideInterfaceBase ---------------------
+    T getTest();
 
-	T getTest();
-
-	void testMethod();
+    void testMethod();
 }

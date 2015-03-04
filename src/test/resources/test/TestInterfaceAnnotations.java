@@ -7,12 +7,12 @@ package test;
  */
 @Deprecated
 public interface TestInterfaceAnnotations {
-	/**
-	 * @actionscript.method annotation=Bindable
-	 * @cs.method annotation=System.Serializable
-	 */
-	@Deprecated
-	void annotatedMethod();
+    /**
+     * @actionscript.method annotation=Bindable
+     * @cs.method annotation=System.Serializable
+     */
+    @Deprecated
+    void annotatedMethod();
 
-	void notAnnotatedMethod();
+    void notAnnotatedMethod();
 }

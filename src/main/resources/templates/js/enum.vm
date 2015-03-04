@@ -1,0 +1,15 @@
+#* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
+#parse("templates/js/js_macros.vm")
+#*
+	ENUM
+*#
+#if($typeDescriptor.description)    /**
+     * $typeDescriptor.description
+     */
+#end
+    function ${typeDescriptor.typeName}() {}
+
+#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
+    ${typeDescriptor.typeName}.prototype.$fieldDescriptor.fieldName = #if($fieldDescriptor.value)$fieldDescriptor.value#else"$fieldDescriptor.fieldName"#end;
+#end
+

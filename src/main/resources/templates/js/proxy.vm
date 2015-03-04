@@ -1,0 +1,34 @@
+#* @vtlvariable name="typeDescriptor" type="cc.catalysts.cdoclet.generator.velocity.TypeDescriptor" *#
+#parse("templates/js/js_macros.vm")
+#*
+	PROXY
+*#
+#if($typeDescriptor.description)	/**
+	 * $typeDescriptor.description
+	 */
+#end
+	function ${typeDescriptor.typeName}($http) {}
+##        protected virtual object DispatchCall(System.Type type, string methodName, params object[] args) {
+##            return null;
+##        }
+##
+##        protected virtual void BeginDispatchCall(System.Type type, string methodName, object async, params object[] args) {
+##        }
+
+#foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
+#if($methodDescriptor.description)		/**
+		 * $methodDescriptor.description
+		 */
+#end
+    ${typeDescriptor.typeName}.prototype.$methodDescriptor.methodName = #js_method($methodDescriptor) {
+#if($methodDescriptor.async)#if($methodDescriptor.callbackType.qualifiedTypeName == "void")
+        beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+#else
+        beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+#end#else#if($methodDescriptor.qualifiedTypeName == "void")
+        dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+#else
+        return dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+#end#end
+    };
+#end

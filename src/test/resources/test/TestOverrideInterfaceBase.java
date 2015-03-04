@@ -6,7 +6,7 @@ package test;
  * @cs.class
  */
 public interface TestOverrideInterfaceBase<T> {
-	public T getTest();
+    public T getTest();
 
-	public void testMethod();
+    public void testMethod();
 }

@@ -2,18 +2,17 @@ package test;
 
 /**
  * @java.class
+ * @js.class
  * @actionscript.class
  * @cs.class
  */
 public class TestOverrideClass<T> extends test.TestOverrideClassBase<T> {
-// --------------------- Interface TestOverrideInterfaceBase ---------------------
+    @Override
+    public T getTest() {
+        return super.getTest();
+    }
 
-	@Override
-	public T getTest() {
-		return super.getTest();
-	}
-
-	@Override
-	public void testMethod() {
-	}
+    @Override
+    public void testMethod() {
+    }
 }

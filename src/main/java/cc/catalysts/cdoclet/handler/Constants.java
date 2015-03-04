@@ -7,6 +7,8 @@ final public class Constants {
 
 	public static final String COMMAND_BEAN = "bean";
 
+	public static final String COMMAND_VERB = "verb";
+
 	public static final String COMMAND_ASYNC = "async";
 	public static final String COMMAND_ASYNC_RETURN_TYPE = "async.returntype";
 	public static final String COMMAND_ASYNC_CALLBACK_TYPE = "async.callbacktype";

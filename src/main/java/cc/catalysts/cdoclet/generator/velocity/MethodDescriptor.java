@@ -1,77 +1,87 @@
 package cc.catalysts.cdoclet.generator.velocity;
 
+import cc.catalysts.cdoclet.generator.Type;
+
 import java.util.ArrayList;
 import java.util.Collection;
-
-import cc.catalysts.cdoclet.generator.Type;
 
 /**
  * @author Catalysts Gmbh
  */
 public class MethodDescriptor extends FieldDescriptor {
-	private Collection<ParameterDescriptor> parameterDescriptors = new ArrayList<ParameterDescriptor>();
-	private boolean async;
-	private boolean override;
-	private String body;
-	private Type genericType;
-	private Type callbackType;
+    private Collection<ParameterDescriptor> parameterDescriptors = new ArrayList<ParameterDescriptor>();
+    private boolean async;
+    private boolean override;
+    private String verb;
+    private String body;
+    private Type genericType;
+    private Type callbackType;
 
-	public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async) {
-		super(modifier, type, methodName, null);
-		this.genericType = genericType;
-		this.async = async;
-	}
+    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async) {
+        this(modifier, type, genericType, methodName, async, null);
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async, String verb) {
+        super(modifier, type, methodName, null);
+        this.genericType = genericType;
+        this.async = async;
+        this.verb = verb;
+    }
 
-	public Type getCallbackType() {
-		return callbackType;
-	}
+    public String getVerb() {
+        return verb;
+    }
 
-	public void setCallbackType(Type callbackType) {
-		this.callbackType = callbackType;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public Type getGenericType() {
-		return genericType;
-	}
+    public Type getCallbackType() {
+        return callbackType;
+    }
 
-	public Collection<ParameterDescriptor> getParameterDescriptors() {
-		return parameterDescriptors;
-	}
+    public void setCallbackType(Type callbackType) {
+        this.callbackType = callbackType;
+    }
 
-	public boolean isAsync() {
-		return async;
-	}
+    public Type getGenericType() {
+        return genericType;
+    }
 
-	public boolean isOverride() {
-		return override;
-	}
+    public Collection<ParameterDescriptor> getParameterDescriptors() {
+        return parameterDescriptors;
+    }
 
-	public void setOverride(boolean override) {
-		this.override = override;
-	}
+    public boolean isAsync() {
+        return async;
+    }
 
-	public void addBody(String body) {
-		this.body = body;
-	}
+    public boolean isOverride() {
+        return override;
+    }
 
-	public void addParameterDescriptor(ParameterDescriptor parameterDescriptor) {
-		parameterDescriptors.add(parameterDescriptor);
-	}
+    public void setOverride(boolean override) {
+        this.override = override;
+    }
 
-	@Override
-	public Collection<String> getImportsInternal() {
-		return addImports(super.getImportsInternal(), parameterDescriptors);
-	}
+    public void addBody(String body) {
+        this.body = body;
+    }
 
-	public String getMethodName() {
-		return getFieldName();
-	}
+    public void addParameterDescriptor(ParameterDescriptor parameterDescriptor) {
+        parameterDescriptors.add(parameterDescriptor);
+    }
 
-	public String getUpperMethodName() {
-		return getPropertyName();
-	}
+    @Override
+    public Collection<String> getImportsInternal() {
+        return addImports(super.getImportsInternal(), parameterDescriptors);
+    }
+
+    public String getMethodName() {
+        return getFieldName();
+    }
+
+    public String getUpperMethodName() {
+        return getPropertyName();
+    }
 }

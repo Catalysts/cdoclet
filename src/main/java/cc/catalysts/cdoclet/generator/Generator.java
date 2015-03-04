@@ -1,78 +1,78 @@
 package cc.catalysts.cdoclet.generator;
 
-import java.lang.annotation.Annotation;
-
-
 import cc.catalysts.cdoclet.map.TypeMap;
-
 import com.sun.javadoc.ClassDoc;
 
+import java.lang.annotation.Annotation;
+
 public interface Generator {
-	void addAnnotation(Type annotation);
-	
-	void addSuperclass(Type annotation);
+    void addAnnotation(Type annotation);
 
-	void addBody(String body);
+    void addSuperclass(Type annotation);
 
-	void addConstant(Type classType, Type constantType, String name, String initializer, String comment);
+    void addBody(String body);
 
-	void addEnumField(Type classType, Type fieldType, String name, Object value, String comment);
+    void addConstant(Type classType, Type constantType, String name, String initializer, String comment);
 
-	void addField(Type classType, int modifier, Type fieldType, String fieldName, Object value, String comment);
+    void addEnumField(Type classType, Type fieldType, String name, Object value, String comment);
 
-	void addInterface(Type type);
+    void addField(Type classType, int modifier, Type fieldType, String fieldName, Object value, String comment);
 
-	void addParameter(Type classType, Type methodType, Type type, String name);
+    void addInterface(Type type);
 
-	void beginClass(Type type);
+    void addParameter(Type classType, Type methodType, Type type, String name);
 
-	void beginEnum(Type type);
+    void beginClass(Type type);
 
-	void beginGetter(Type classType, Type methodType, int modifier, Type fieldType, String propertyName, String comment, boolean override);
+    void beginEnum(Type type);
 
-	void beginInterface(Type type);
+    void beginGetter(Type classType, Type methodType, int modifier, Type fieldType, String propertyName, String comment, boolean override);
 
-	void beginMethod(Type classType, Type methodType, int modifier, Type returnType, String methodName, boolean asnyc, boolean override);
+    void beginInterface(Type type);
 
-	void beginProxy(Type type, Type baseType, Type interfaceType);
+    void beginMethod(Type classType, Type methodType, int modifier, Type returnType, String methodName, boolean asnyc, boolean override);
 
-	void beginSetter(Type classType, Type methodType, int modifier, Type fieldType, String propertyName, String comment, boolean override);
+    void beginMethod(Type classType, Type methodType, int modifier, Type returnType, String methodName, boolean asnyc, boolean override, String verb);
 
-	void endClass();
+    void beginProxy(Type type, Type baseType, Type interfaceType);
 
-	void endEnum();
+    void beginSetter(Type classType, Type methodType, int modifier, Type fieldType, String propertyName, String comment, boolean override);
 
-	void endGetter();
+    void endClass();
 
-	void endInterface();
+    void endEnum();
 
-	void endMethod(Type callbackType);
+    void endGetter();
 
-	void endProxy();
+    void endInterface();
 
-	void endSetter();
+    void endMethod(Type callbackType);
 
-	void generate() throws Exception;
+    void endProxy();
 
-	TypeMap getAnnotationMap();
+    void endSetter();
 
-	TypeMap getAnnotationTypeMap();
+    void generate() throws Exception;
 
-	Class<? extends Annotation> getEnumAnnotation();
+    TypeMap getAnnotationMap();
 
-	String getName();
+    TypeMap getAnnotationTypeMap();
 
-	TypeMap getTypeMap();
+    Class<? extends Annotation> getEnumAnnotation();
 
-	boolean hasEnumSupport();
+    String getName();
 
-	Type postProcessType(Type type);
+    TypeMap getTypeMap();
 
-	void setMethodDescription(String description);
+    boolean hasEnumSupport();
 
-	void setSuperclass(Type type, boolean exception);
+    Type postProcessType(Type type);
 
-	void setTypeDescription(String description);
+    void setMethodDescription(String description);
 
-	boolean traverse(ClassDoc classDoc);
+    void setSuperclass(Type type, boolean exception);
+
+    void setTypeDescription(String description);
+
+    boolean traverse(ClassDoc classDoc);
 }

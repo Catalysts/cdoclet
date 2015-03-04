@@ -4,6 +4,7 @@ import test.TestException;
 
 /**
  * @java.class ignore=TestException
+ * @js.class ignore=TestException
  * @actionscript.class ignore=TestException
  * @cs.class ignore=TestException
  */

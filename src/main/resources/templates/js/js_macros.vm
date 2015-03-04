@@ -1,0 +1,8 @@
+#macro(js_params $descriptor)
+#foreach($parameterDescriptor in $descriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end
+#end
+#macro(js_method $descriptor)
+function(#js_params($descriptor))#end
+#macro(js_property $descriptor)
+${descriptor.propertyName}
+#end
