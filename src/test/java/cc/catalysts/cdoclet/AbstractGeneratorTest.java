@@ -1,6 +1,5 @@
 package cc.catalysts.cdoclet;
 
-import cc.catalysts.cdoclet.generator.Languages;
 import com.sun.tools.javadoc.Main;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -47,11 +46,15 @@ public abstract class AbstractGeneratorTest {
             fileExt = "as";
         }
 
-        Main.execute(new String[]{"-d", "test/results/" + fileExt, "-doclet", "cc.catalysts.cdoclet.CDoclet", "-generator", getLanguage(), inputFile});
+        int result = Main.execute(new String[]{"-d", "test/results/" + fileExt, "-doclet", "cc.catalysts.cdoclet.CDoclet", "-generator", getLanguage(), inputFile});
+
+        if (result > 0) {
+            Assert.fail("javadoc error");
+        }
 
         File output = new File(getOutputDir() + fileWithoutExt + "." + fileExt);
 
-        File expected = new File("src/test/resources/expectations/" + fileExt + "/test/" + fileWithoutExt + "." + fileExt );
+        File expected = new File("src/test/resources/expectations/" + fileExt + "/test/" + fileWithoutExt + "." + fileExt);
 
         if (!expected.exists()) {
             System.err.println("file " + expected.getAbsolutePath() + " does not exist\nSkipping Test!");
