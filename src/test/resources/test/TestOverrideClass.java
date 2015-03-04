@@ -5,7 +5,7 @@ package test;
  * @actionscript.class
  * @cs.class
  */
-public class TestOverrideClass<T> extends expectations.java.test.TestOverrideClassBase<T> {
+public class TestOverrideClass<T> extends test.TestOverrideClassBase<T> {
 // --------------------- Interface TestOverrideInterfaceBase ---------------------
 
 	@Override

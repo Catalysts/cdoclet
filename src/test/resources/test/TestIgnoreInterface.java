@@ -5,7 +5,7 @@ package test;
  * @actionscript.class ignore=TestOverrideInterfaceBase
  * @cs.class ignore=TestOverrideInterfaceBase
  */
-public interface TestIgnoreInterface<T> extends expectations.java.test.TestOverrideInterfaceBase<T> {
+public interface TestIgnoreInterface<T> extends test.TestOverrideInterfaceBase<T> {
 // --------------------- Interface TestOverrideInterfaceBase ---------------------
 
 	T getTest();

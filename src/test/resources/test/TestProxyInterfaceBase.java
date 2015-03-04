@@ -8,6 +8,6 @@ import java.util.Date;
  * @actionscript.class
  * @cs.class
  */
-public interface TestProxyInterfaceBase<T extends Date> extends expectations.java.test.TestProxyInterfaceGeneric {
+public interface TestProxyInterfaceBase<T extends Date> extends test.TestProxyInterfaceGeneric {
 	Collection<T> foo(T bar);
 }

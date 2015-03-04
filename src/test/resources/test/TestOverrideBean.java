@@ -3,7 +3,7 @@ package test;
 /**
  * @java.class
  */
-public class TestOverrideBean extends expectations.java.test.TestBean {
+public class TestOverrideBean extends test.TestBean {
 
     private long count;
 
