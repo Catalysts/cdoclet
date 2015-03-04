@@ -16,7 +16,7 @@ import java.util.List;
 
 @RunWith(Parameterized.class)
 public abstract class AbstractGeneratorTest {
-    private static final String inputDirectory = "src/test/java/cdoclet/test/";
+    private static final String inputDirectory = "src/test/resources/test/";
 
     @Parameters(name = "{0}")
     public static List<Object[]> data() {
@@ -51,8 +51,7 @@ public abstract class AbstractGeneratorTest {
 
         File output = new File(getOutputDir() + fileWithoutExt + "." + fileExt);
 
-        String suffix = getLanguage().equals(Languages.JAVA) ? ".test" : "";
-        File expected = new File("src/test/java/WEB-INF/expectations/" + fileExt + "/cdoclet/test/" + fileWithoutExt + "." + fileExt + suffix);
+        File expected = new File("src/test/resources/expectations/" + fileExt + "/cdoclet/test/" + fileWithoutExt + "." + fileExt );
 
         if (!expected.exists()) {
             System.err.println("file " + expected.getAbsolutePath() + " does not exist\nSkipping Test!");
