@@ -16,18 +16,18 @@ public class JavaGeneratorTest extends AbstractGeneratorTest {
 	public JavaGeneratorTest(String inputFile) {
 		super(inputFile);
 	}
-	
+
  	@BeforeClass
  	public static void beforeClass() throws IOException {
  		FileUtils.deleteDirectory(new File(new JavaGeneratorTest(null).getOutputDir()));
  	}
- 	
+
  	protected String getLanguage() {
  		return Languages.JAVA;
  	}
 
     @Override
     protected String getOutputDir() {
-        return "test/results/java/cdoclet/test/";
+        return "test/results/java/test/";
     }
 }

@@ -16,18 +16,18 @@ public class CSharpGeneratorTest extends AbstractGeneratorTest {
 	public CSharpGeneratorTest(String inputFile) {
 		super(inputFile);
 	}
-	
+
  	@BeforeClass
  	public static void beforeClass() throws IOException {
  		FileUtils.deleteDirectory(new File(new CSharpGeneratorTest(null).getOutputDir()));
  	}
- 	
+
  	protected String getLanguage() {
  		return Languages.CSHARP;
  	}
 
     @Override
     protected String getOutputDir() {
-        return "test/results/cs/cdoclet/test/";
+        return "test/results/cs/test/";
     }
 }

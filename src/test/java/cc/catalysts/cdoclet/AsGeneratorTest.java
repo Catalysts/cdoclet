@@ -27,6 +27,6 @@ public class AsGeneratorTest extends AbstractGeneratorTest {
 
     @Override
     protected String getOutputDir() {
-        return "test/results/as/cdoclet/test/";
+        return "test/results/as/test/";
     }
 }
