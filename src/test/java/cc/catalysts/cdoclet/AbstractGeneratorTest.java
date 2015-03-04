@@ -51,7 +51,7 @@ public abstract class AbstractGeneratorTest {
 
         File output = new File(getOutputDir() + fileWithoutExt + "." + fileExt);
 
-        File expected = new File("src/test/resources/expectations/" + fileExt + "/cdoclet/test/" + fileWithoutExt + "." + fileExt );
+        File expected = new File("src/test/resources/expectations/" + fileExt + "/test/" + fileWithoutExt + "." + fileExt );
 
         if (!expected.exists()) {
             System.err.println("file " + expected.getAbsolutePath() + " does not exist\nSkipping Test!");

@@ -1,6 +1,6 @@
 
 
-package expectations.java.cdoclet.test;
+package expectations.java.test;
 
 import java.sql.Date;
 
