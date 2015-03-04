@@ -1,9 +1,6 @@
 /.gradle
-/.settings
-/.classpath
 /build
 /test
-/bin
 
 /.idea
 /cdoclet.iml
