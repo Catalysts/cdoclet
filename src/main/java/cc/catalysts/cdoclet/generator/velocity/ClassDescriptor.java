@@ -1,8 +1,8 @@
 package cc.catalysts.cdoclet.generator.velocity;
 
-import java.util.Collection;
-
 import cc.catalysts.cdoclet.generator.Type;
+
+import java.util.Collection;
 
 /**
  * @author Catalysts Gmbh
@@ -10,8 +10,8 @@ import cc.catalysts.cdoclet.generator.Type;
 public class ClassDescriptor extends TypeDescriptor {
 	private Type superClass;
 
-	public ClassDescriptor(Type type) {
-		super(type);
+	public ClassDescriptor(Type type, String name) {
+		super(type, name);
 	}
 
 	public Type getSuperClass() {

@@ -7,7 +7,7 @@ import cc.catalysts.cdoclet.generator.Type;
  */
 public class EnumDescriptor extends TypeDescriptor {
 	public EnumDescriptor(Type typeName) {
-		super(typeName);
+		super(typeName, typeName.getName());
 	}
 
 	public String getTemplate() {

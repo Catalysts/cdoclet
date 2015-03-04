@@ -30,6 +30,7 @@ public class CDoclet {
     private static final String PARAM_GENERATOR = "-generator";
     private static final String PARAM_ENUM = "-enum";
     private static final String PARAM_MAP = "-map";
+    private static final String PARAM_SUFFIX = "-suffix";
     private static final String PARAM_GENERIC_MAP = "-genericmap";
     private static final String PARAM_ANNOTATION_MAP = "-annotation";
     private static final String PARAM_ANNOTATION_TYPE_MAP = "-annotationmap";
@@ -79,6 +80,7 @@ public class CDoclet {
         String destination = ".";
         String namespace = null;
         String generator = null;
+        String suffix = null;
         Class<? extends Annotation> enumAnnotation = null;
 
         ClassTypeMap typeMap = new ClassTypeMap();
@@ -92,6 +94,8 @@ public class CDoclet {
                 namespace = opt[1];
             } else if (opt[0].equals(PARAM_GENERATOR)) {
                 generator = opt[1];
+            } else if (opt[0].equals(PARAM_SUFFIX)) {
+                suffix = opt[1];
             } else if (opt[0].equals(PARAM_ENUM)) {
                 enumAnnotation = (Class<? extends Annotation>) Class.forName(opt[1]);
             } else if (opt[0].equals(PARAM_MAP)) {
@@ -109,10 +113,14 @@ public class CDoclet {
             }
         }
 
+        if (suffix == null) {
+            suffix = "";
+        }
+
         if (Languages.ACTIONSCRIPT.equals(generator)) {
-            return new AsGenerator(destination, namespace, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+            return new AsGenerator(destination, namespace, suffix, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
         } else if (Languages.CSHARP.equals(generator) || Languages.JAVA.equals(generator) || Languages.JAVASCRIPT.equals(generator)) {
-            return new TemplateGenerator(destination, namespace, generator, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+            return new TemplateGenerator(destination, namespace, generator, suffix, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
         }
 
         return null;

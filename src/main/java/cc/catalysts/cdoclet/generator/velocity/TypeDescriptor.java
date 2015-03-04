@@ -1,11 +1,11 @@
 package cc.catalysts.cdoclet.generator.velocity;
 
+import cc.catalysts.cdoclet.generator.Type;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import cc.catalysts.cdoclet.generator.Type;
 
 public abstract class TypeDescriptor extends Descriptor {
 	private Map<String, PropertyDescriptor> propertyDescriptors = new LinkedHashMap<String, PropertyDescriptor>();
@@ -13,8 +13,8 @@ public abstract class TypeDescriptor extends Descriptor {
 	private Collection<MethodDescriptor> methodDescriptors = new ArrayList<MethodDescriptor>();
 	private Collection<Type> interfaces = new ArrayList<Type>();
 
-	public TypeDescriptor(Type type) {
-		super(type);
+	public TypeDescriptor(Type type, String name) {
+		super(type, name);
 	}
 
 	@Override

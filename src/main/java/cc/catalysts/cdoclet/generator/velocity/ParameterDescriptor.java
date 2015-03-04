@@ -9,7 +9,7 @@ public class ParameterDescriptor extends Descriptor {
 	private String parameterName;
 
 	public ParameterDescriptor(Type parameterType, String parameterName) {
-		super(parameterType);
+		super(parameterType, parameterType.getName());
 		this.parameterName = parameterName;
 	}
 

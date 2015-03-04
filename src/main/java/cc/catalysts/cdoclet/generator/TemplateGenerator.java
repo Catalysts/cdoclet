@@ -32,16 +32,18 @@ public class TemplateGenerator implements Generator {
     private final File destination;
     private final String language;
     private final String namespace;
+    private final String suffix;
 
     private final TypeMap annotationMap;
     private final TypeMap annotationTypeMap;
     private final TypeMap typeMap;
     private final Class<? extends Annotation> enumAnnotation;
 
-    public TemplateGenerator(String destination, String namespace, String language, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
+    public TemplateGenerator(String destination, String namespace, String language, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
         this.destination = new File(destination);
         this.namespace = namespace;
         this.language = language;
+        this.suffix = suffix;
 
         this.enumAnnotation = enumAnnotation;
         this.typeMap = typeMap;
@@ -220,7 +222,7 @@ public class TemplateGenerator implements Generator {
 
 
     public void beginClass(Type type) {
-        beginType(new ClassDescriptor(type));
+        beginType(new ClassDescriptor(type, type.getName() + suffix));
     }
 
 

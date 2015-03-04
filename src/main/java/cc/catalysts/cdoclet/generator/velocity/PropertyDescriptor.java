@@ -1,8 +1,8 @@
 package cc.catalysts.cdoclet.generator.velocity;
 
-import java.lang.reflect.Modifier;
-
 import cc.catalysts.cdoclet.generator.Type;
+
+import java.lang.reflect.Modifier;
 
 /**
  * @author Catalysts Gmbh
@@ -16,7 +16,7 @@ public class PropertyDescriptor extends Descriptor {
 	private Type genericType;
 
 	public PropertyDescriptor(int modifier, Type type, Type genericType, String fieldName) {
-		super(type);
+		super(type, type.getName());
 
 		this.modifier = modifier;
 		this.genericType = genericType;

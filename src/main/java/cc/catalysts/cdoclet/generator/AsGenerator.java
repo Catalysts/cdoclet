@@ -41,15 +41,17 @@ public class AsGenerator implements Generator {
     private final TypeMap annotationTypeMap;
     private final TypeMap typeMap;
     private final Class<? extends Annotation> enumAnnotation;
+    private final String suffix;
 
     private Collection<String> imports;
     private Collection<String> proxyImports;
 
-    public AsGenerator(String destination, String namespace, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) {
+    public AsGenerator(String destination, String namespace, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) {
         this.enumAnnotation = enumAnnotation;
         this.typeMap = typeMap;
         this.annotationTypeMap = annotationTypeMap;
         this.annotationMap = annotationMap;
+        this.suffix = suffix;
 
         project = factory.newEmptyASProject(destination);
 
@@ -170,7 +172,7 @@ public class AsGenerator implements Generator {
     public void beginClass(Type classType) {
         logger.info("Creating ActionScript class {}", classType);
 
-        newClass(classType, false);
+        newClass(classType.getName() + suffix, false);
         addAnnotation(GeneratorUtils.getType("RemoteClass(alias=\"" + classType.getName() + "\")", this));
     }
 
@@ -178,7 +180,7 @@ public class AsGenerator implements Generator {
     public void beginEnum(Type name) {
         logger.info("Creating ActionScript enumeration {}", name);
 
-        newClass(name, true);
+        newClass(name.getName(), true);
     }
 
 
@@ -426,8 +428,8 @@ public class AsGenerator implements Generator {
         }
     }
 
-    private void newClass(Type classType, boolean isFinal) {
-        unit = project.newClass(classType.getName());
+    private void newClass(String name, boolean isFinal) {
+        unit = project.newClass(name);
         type = unit.getType();
         ((ASClassType) type).setFinal(isFinal);
 
