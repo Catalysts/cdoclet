@@ -3,13 +3,12 @@
 #*
 	ENUM
 *#
-#if($typeDescriptor.description)    /**
-     * $typeDescriptor.description
-     */
+#if($typeDescriptor.description)/**
+ * $typeDescriptor.description
+ */
 #end
-    function ${typeDescriptor.typeName}() {}
+function ${typeDescriptor.typeName}() {}
 
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
-    ${typeDescriptor.typeName}.prototype.$fieldDescriptor.fieldName = #if($fieldDescriptor.value)$fieldDescriptor.value#else"$fieldDescriptor.fieldName"#end;
+${typeDescriptor.typeName}.$fieldDescriptor.fieldName = #if($fieldDescriptor.value)$fieldDescriptor.value#else"$fieldDescriptor.fieldName"#end;
 #end
-

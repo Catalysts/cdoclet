@@ -44,15 +44,16 @@ public class InterfaceHandler extends AbstractHandler {
         boolean bean = TagParser.getBooleanCommand(Constants.COMMAND_BEAN, commands);
         Set<String> ignore = getIgnore(commands);
 
-        cc.catalysts.cdoclet.generator.Type interfaceName = GeneratorUtils.getType(classDoc, getGenerator(), ignore);
+        cc.catalysts.cdoclet.generator.Type type = GeneratorUtils.getType(classDoc, getGenerator(), ignore);
 
-        getGenerator().beginInterface(interfaceName);
+        getGenerator().beginInterface(type);
 
         processAnnotations(classDoc.annotations());
         processAnnotationCommands(commands);
         processInterfaces(classDoc, ignore);
         processClassComment(classDoc);
-        processMethods(classDoc, interfaceName, bean, ignore, commands, null);
+        processClassConstants(type, classDoc, ignore);
+        processMethods(classDoc, type, bean, ignore, commands, null);
 
         getGenerator().endInterface();
     }

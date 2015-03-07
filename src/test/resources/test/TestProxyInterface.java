@@ -9,6 +9,8 @@ import java.sql.Date;
  * @cs.class proxy=<code>true</code> async=<code>true</code> async.callbacktype=AsyncCallback&lt;$type$&gt;
  */
 public interface TestProxyInterface extends test.TestProxyInterfaceBase<Date> {
+    String NAME = "test";
+
     /**
      * @js.method verb=POST
      */

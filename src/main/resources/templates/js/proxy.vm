@@ -3,28 +3,28 @@
 #*
 	PROXY
 *#
-#if($typeDescriptor.description)	/**
-	 * $typeDescriptor.description
-	 */
+#if($typeDescriptor.description)/**
+ * $typeDescriptor.description
+ */
 #end
-	function ${typeDescriptor.typeName}($http) {
-        this.$http = $http;
-    }
+function ${typeDescriptor.typeName}($http) {
+    this.$http = $http;
+}
 
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
-#if($methodDescriptor.description)		/**
-		 * $methodDescriptor.description
-		 */
+#if($methodDescriptor.description)/**
+ * $methodDescriptor.description
+ */
 #end
-    ${typeDescriptor.typeName}.prototype.$methodDescriptor.methodName = #js_method($methodDescriptor) {
+${typeDescriptor.typeName}.prototype.$methodDescriptor.methodName = #js_method($methodDescriptor) {
 #if($methodDescriptor.async)#if($methodDescriptor.callbackType.qualifiedTypeName == "void")
-        this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
 #else
-        this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
 #end#else#if($methodDescriptor.qualifiedTypeName == "void")
-        this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
 #else
-        return this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    return this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
 #end#end
-    };
+};
 #end

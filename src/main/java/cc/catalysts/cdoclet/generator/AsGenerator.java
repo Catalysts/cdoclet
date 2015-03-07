@@ -127,7 +127,10 @@ public class AsGenerator implements Generator {
 
 
     public void addConstant(Type classType, Type constantType, String name, String initializer, String comment) {
-        createConst((ASClassType) type, name, initializer, constantType.getName(), comment);
+        if (type instanceof ASClassType) {
+            // actionscript/metaas doesn't support constants in interfaces
+            createConst((ASClassType) type, name, initializer, constantType.getName(), comment);
+        }
     }
 
 

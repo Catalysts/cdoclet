@@ -11,6 +11,16 @@ package $typeDescriptor.nameSpace;
 #foreach($annotation in $typeDescriptor.annotations)@$annotation.name
 #end
 public interface $typeDescriptor.typeName#java_genericclass($typeDescriptor)#java_extends($typeDescriptor) {
+#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
+#if($fieldDescriptor.description)	/**
+     * $fieldDescriptor.description
+     */
+#end
+    #java_type($fieldDescriptor) $fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+#end
+#if($typeDescriptor.fieldDescriptors.size() > 0)
+
+#end
 #foreach($propertyDescriptor in $typeDescriptor.propertyDescriptors)
 	#java_modifiers($propertyDescriptor, '')#java_property($propertyDescriptor, "") { #if($propertyDescriptor.getter)get;#end#if($propertyDescriptor.setter)set;#end }
 

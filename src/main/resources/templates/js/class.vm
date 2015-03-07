@@ -3,19 +3,30 @@
 #*
 	CLASS
 *#
-#if($typeDescriptor.description)    /**
-     * $typeDescriptor.description
+#if($typeDescriptor.description)/**
+ * $typeDescriptor.description
+ */
+#end
+function ${typeDescriptor.typeName}() {
+#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
+#if($fieldDescriptor.modifier != "static")
+#if($fieldDescriptor.description)	    /**
+     * $fieldDescriptor.description
      */
 #end
-    function ${typeDescriptor.typeName}() {
+    this.$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+#end
+#end
+}
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
-#if($fieldDescriptor.description)	    /**
-         * $fieldDescriptor.description
-         */
+#if($fieldDescriptor.modifier == "static")
+#if($fieldDescriptor.description)	/**
+    * $fieldDescriptor.description
+    */
 #end
-		this.$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+    ${typeDescriptor.typeName}.$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
-    }
+#end
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)
 #if($methodDescriptor.description)/**
  * $methodDescriptor.description
