@@ -13,7 +13,7 @@
          * $fieldDescriptor.description
          */
 #end
-		#if($fieldDescriptor.modifier == "private")var #{else}this.#end$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
+		this.$fieldDescriptor.fieldName#if($fieldDescriptor.value) = $fieldDescriptor.value#end;
 #end
     }
 #foreach($methodDescriptor in $typeDescriptor.methodDescriptors)

@@ -1,7 +1,9 @@
 
 
-	function TestProxyInterfaceProxy($http) {}
+	function TestProxyInterfaceProxy($http) {
+        this.$http = $http;
+    }
 
     TestProxyInterfaceProxy.prototype.baz = function(ago) {
-        dispatchCall("POST", "baz", [ago]);
+        this.dispatchCall("POST", "baz", [ago]);
     };
