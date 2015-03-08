@@ -64,6 +64,8 @@ public interface Generator {
 
     TypeMap getTypeMap();
 
+    TypeMap getPackageMap();
+
     boolean hasEnumSupport();
 
     Type postProcessType(Type type);

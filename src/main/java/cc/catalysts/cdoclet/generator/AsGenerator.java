@@ -39,6 +39,7 @@ public class AsGenerator implements Generator {
 
     private final TypeMap annotationMap;
     private final TypeMap annotationTypeMap;
+    private final TypeMap packageMap;
     private final TypeMap typeMap;
     private final Class<? extends Annotation> enumAnnotation;
     private final String suffix;
@@ -46,9 +47,10 @@ public class AsGenerator implements Generator {
     private Collection<String> imports;
     private Collection<String> proxyImports;
 
-    public AsGenerator(String destination, String namespace, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) {
+    public AsGenerator(String destination, String namespace, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap packageMap, TypeMap annotationTypeMap, TypeMap annotationMap) {
         this.enumAnnotation = enumAnnotation;
         this.typeMap = typeMap;
+        this.packageMap = packageMap;
         this.annotationTypeMap = annotationTypeMap;
         this.annotationMap = annotationMap;
         this.suffix = suffix;
@@ -103,6 +105,10 @@ public class AsGenerator implements Generator {
 
     public Class<? extends Annotation> getEnumAnnotation() {
         return enumAnnotation;
+    }
+
+    public TypeMap getPackageMap() {
+        return packageMap;
     }
 
     public TypeMap getTypeMap() {

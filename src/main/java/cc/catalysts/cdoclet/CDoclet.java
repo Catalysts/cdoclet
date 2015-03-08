@@ -6,6 +6,7 @@ import cc.catalysts.cdoclet.generator.Languages;
 import cc.catalysts.cdoclet.generator.TemplateGenerator;
 import cc.catalysts.cdoclet.handler.*;
 import cc.catalysts.cdoclet.map.ClassTypeMap;
+import cc.catalysts.cdoclet.map.PackageTypeMap;
 import cc.catalysts.cdoclet.map.TypeMap;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
@@ -29,8 +30,9 @@ public class CDoclet {
     private static final String PARAM_NAMESPACE = "-namespace";
     private static final String PARAM_GENERATOR = "-generator";
     private static final String PARAM_ENUM = "-enum";
-    private static final String PARAM_MAP = "-map";
     private static final String PARAM_SUFFIX = "-suffix";
+    private static final String PARAM_MAP = "-map";
+    private static final String PARAM_PACKAGE_MAP = "-packagemap";
     private static final String PARAM_GENERIC_MAP = "-genericmap";
     private static final String PARAM_ANNOTATION_MAP = "-annotation";
     private static final String PARAM_ANNOTATION_TYPE_MAP = "-annotationmap";
@@ -84,6 +86,7 @@ public class CDoclet {
         Class<? extends Annotation> enumAnnotation = null;
 
         ClassTypeMap typeMap = new ClassTypeMap();
+        PackageTypeMap packageMap = new PackageTypeMap();
         TypeMap annotationMap = new TypeMap();
         TypeMap annotationTypeMap = new TypeMap();
 
@@ -101,6 +104,9 @@ public class CDoclet {
             } else if (opt[0].equals(PARAM_MAP)) {
                 String[] strings = opt[1].split(":");
                 if (strings.length == 2) typeMap.addTypeMapping(strings[0], strings[1]);
+            } else if (opt[0].equals(PARAM_PACKAGE_MAP)) {
+                String[] strings = opt[1].split(":");
+                if (strings.length == 2) packageMap.addTypeMapping(strings[0], strings[1]);
             } else if (opt[0].equals(PARAM_GENERIC_MAP)) {
                 String[] strings = opt[1].split(":");
                 if (strings.length == 2) typeMap.addGenericTypeMapping(strings[0], strings[1]);
@@ -118,9 +124,9 @@ public class CDoclet {
         }
 
         if (Languages.ACTIONSCRIPT.equals(generator)) {
-            return new AsGenerator(destination, namespace, suffix, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+            return new AsGenerator(destination, namespace, suffix, enumAnnotation, typeMap, packageMap, annotationTypeMap, annotationMap);
         } else if (Languages.CSHARP.equals(generator) || Languages.JAVA.equals(generator) || Languages.JAVASCRIPT.equals(generator)) {
-            return new TemplateGenerator(destination, namespace, generator, suffix, enumAnnotation, typeMap, annotationTypeMap, annotationMap);
+            return new TemplateGenerator(destination, namespace, generator, suffix, enumAnnotation, typeMap, packageMap, annotationTypeMap, annotationMap);
         }
 
         return null;
@@ -148,7 +154,9 @@ public class CDoclet {
                 PARAM_NAMESPACE,
                 PARAM_GENERATOR,
                 PARAM_ENUM,
+                PARAM_SUFFIX,
                 PARAM_MAP,
+                PARAM_PACKAGE_MAP,
                 PARAM_GENERIC_MAP,
                 PARAM_ANNOTATION_MAP,
                 PARAM_ANNOTATION_TYPE_MAP

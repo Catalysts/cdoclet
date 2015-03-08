@@ -46,7 +46,7 @@ public abstract class AbstractGeneratorTest {
             fileExt = "as";
         }
 
-        int result = Main.execute(new String[]{"-d", "test/results/" + fileExt, "-doclet", "cc.catalysts.cdoclet.CDoclet", "-generator", getLanguage(), inputFile});
+        int result = Main.execute(new String[]{"-d", "test/results/" + fileExt, "-doclet", "cc.catalysts.cdoclet.CDoclet", "-generator", getLanguage(), "-packagemap", "test:test" + getLanguage(), "-suffix", "Dto", inputFile});
 
         if (result > 0) {
             Assert.fail("javadoc error");

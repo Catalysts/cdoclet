@@ -36,10 +36,11 @@ public class TemplateGenerator implements Generator {
 
     private final TypeMap annotationMap;
     private final TypeMap annotationTypeMap;
+    private final TypeMap packageMap;
     private final TypeMap typeMap;
     private final Class<? extends Annotation> enumAnnotation;
 
-    public TemplateGenerator(String destination, String namespace, String language, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
+    public TemplateGenerator(String destination, String namespace, String language, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap packageMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
         this.destination = new File(destination);
         this.namespace = namespace;
         this.language = language;
@@ -47,6 +48,7 @@ public class TemplateGenerator implements Generator {
 
         this.enumAnnotation = enumAnnotation;
         this.typeMap = typeMap;
+        this.packageMap = packageMap;
         this.annotationTypeMap = annotationTypeMap;
         this.annotationMap = annotationMap;
 
@@ -116,27 +118,27 @@ public class TemplateGenerator implements Generator {
         typeMap.addGenericTypeMapping("java.util.Set", "System.Collections.Generic.ICollection");
     }
 
-
     public TypeMap getAnnotationMap() {
         return annotationMap;
     }
-
 
     public TypeMap getAnnotationTypeMap() {
         return annotationTypeMap;
     }
 
-
     public Class<? extends Annotation> getEnumAnnotation() {
         return enumAnnotation;
     }
-
 
     public TypeMap getTypeMap() {
         return typeMap;
     }
 
-// --------------------- Interface Generator ---------------------
+    public TypeMap getPackageMap() {
+        return packageMap;
+    }
+
+    // --------------------- Interface Generator ---------------------
 
 
     public void addAnnotation(Type annotation) {
