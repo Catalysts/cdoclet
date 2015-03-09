@@ -7,6 +7,7 @@ package testjava;
 public class TestBeanDto {
 	private int value;
 	private String name;
+	private testjava.TestBeanDto self;
 	
 	public int getValue() {
 		return this.value;
@@ -22,5 +23,13 @@ public class TestBeanDto {
 	
 	public void setName(String value) {
 		this.name = value;
+	}
+	
+	public testjava.TestBeanDto getSelf() {
+		return this.self;
+	}
+	
+	public void setSelf(testjava.TestBeanDto value) {
+		this.self = value;
 	}
 }

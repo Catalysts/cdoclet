@@ -8,7 +8,7 @@ package $typeDescriptor.nameSpace;
  * $typeDescriptor.description
  */
 #end
-#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.qualifiedTypeName
 #end
 public interface $typeDescriptor.typeName#java_genericclass($typeDescriptor)#java_extends($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
@@ -33,7 +33,7 @@ public interface $typeDescriptor.typeName#java_genericclass($typeDescriptor)#jav
 	 * $methodDescriptor.description
 	 */
 #end
-#foreach($annotation in $methodDescriptor.annotations)	@$annotation.name
+#foreach($annotation in $methodDescriptor.annotations)	@$annotation.qualifiedTypeName
 #end
 	#if($methodDescriptor.modifier != "")$methodDescriptor.modifier #end#java_method($methodDescriptor);
 #end

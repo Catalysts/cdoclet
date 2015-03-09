@@ -5,5 +5,5 @@ function TestProxyInterfaceProxy($http) {
 }
 
 TestProxyInterfaceProxy.prototype.baz = function(ago) {
-    this.dispatchCall("POST", "baz", [ago]);
+    return this.dispatchCall("POST", "baz", [ago]);
 };

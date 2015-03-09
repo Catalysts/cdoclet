@@ -6,10 +6,10 @@
 #foreach($arg in $descriptor.bounds.keySet()) where $arg : #cs_type($descriptor.bounds.get($arg))#end
 #end
 #macro(cs_generics $type)
-#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.name == "?")#cs_type($type.bounds.get("?"))#else#cs_type($argument)#end#end>#end
+#if($type.arguments)<#foreach($argument in $type.arguments)#if($velocityCount>1), #end#if($argument.qualifiedTypeName == "?")#cs_type($type.bounds.get("?"))#else#cs_type($argument)#end#end>#end
 #end
 #macro(cs_type $type)
-$type.name#cs_generics($type)#cs_dimensions($type.dimensions)
+$type.qualifiedTypeName#cs_generics($type)#cs_dimensions($type.dimensions)
 #end
 #macro(cs_implements $descriptor)
 #if($descriptor.superClass) : #cs_type($descriptor.superClass)#foreach($interface in $descriptor.interfaces), #cs_type($interface)#end#else#foreach($interface in $descriptor.interfaces)#if($velocityCount == 1) : #{else}, #end#cs_type($interface)#end#end
@@ -24,7 +24,7 @@ $type.name#cs_generics($type)#cs_dimensions($type.dimensions)
 #cs_type($descriptor) ${descriptor.propertyName}#cs_generics($descriptor.genericType)#cs_bounds($descriptor.genericType)
 #end
 #macro(cs_modifiers $descriptor $default)
-#foreach($annotation in $descriptor.annotations)[$annotation.name]
+#foreach($annotation in $descriptor.annotations)[$annotation.qualifiedTypeName]
 		#end
 #if($descriptor.modifier != "")$descriptor.modifier #end#if($descriptor.override)override #elseif($default != "")$default #end
 #end

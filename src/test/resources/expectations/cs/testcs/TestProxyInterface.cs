@@ -8,7 +8,7 @@ namespace testcs {
 	 * </summary>
 	 */
 	public interface TestProxyInterface : testcs.TestProxyInterfaceBase<java.sql.Date> {
-		void Baz(AsyncCallback async, long ago);
+		void Baz(AsyncCallback<testcs.TestBeanDto> async, long ago);
 	}
 #endregion
 }

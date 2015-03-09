@@ -11,7 +11,7 @@ namespace $typeDescriptor.nameSpace {
 	 * </summary>
 	 */
 #end
-#foreach($annotation in $typeDescriptor.annotations)	[$annotation.name]
+#foreach($annotation in $typeDescriptor.annotations)	[$annotation.qualifiedTypeName]
 #end
 	public class $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
         protected virtual object DispatchCall(System.Type type, string methodName, params object[] args) {

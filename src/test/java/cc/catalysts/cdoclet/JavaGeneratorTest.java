@@ -1,14 +1,13 @@
 package cc.catalysts.cdoclet;
 
-import java.io.File;
-import java.io.IOException;
-
+import cc.catalysts.cdoclet.generator.Languages;
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import cc.catalysts.cdoclet.generator.Languages;
+import java.io.File;
+import java.io.IOException;
 
 @RunWith(Parameterized.class)
 public class JavaGeneratorTest extends AbstractGeneratorTest {
@@ -28,6 +27,6 @@ public class JavaGeneratorTest extends AbstractGeneratorTest {
 
     @Override
     protected String getOutputDir() {
-        return "test/results/java/test/";
+        return "test/results/java/testjava/";
     }
 }

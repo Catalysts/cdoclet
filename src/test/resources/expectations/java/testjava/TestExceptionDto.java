@@ -6,18 +6,18 @@ package testjava;
  */
 public class TestExceptionDto extends Exception {
 	
-	public TestExceptionDto() {
+	public  TestExceptionDto() {
 	}
 	
-	public TestExceptionDto(String message) {
+	public  TestExceptionDto(String message) {
 		super(message);
 	}
 	
-	public TestExceptionDto(Throwable cause) {
+	public  TestExceptionDto(Throwable cause) {
 		super(cause);
 	}
 	
-	public TestExceptionDto(String message, Throwable cause) {
+	public  TestExceptionDto(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

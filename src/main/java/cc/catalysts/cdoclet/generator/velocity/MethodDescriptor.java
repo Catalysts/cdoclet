@@ -1,5 +1,6 @@
 package cc.catalysts.cdoclet.generator.velocity;
 
+import cc.catalysts.cdoclet.generator.Generator;
 import cc.catalysts.cdoclet.generator.Type;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ public class MethodDescriptor extends FieldDescriptor {
     private Type genericType;
     private Type callbackType;
 
-    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async) {
-        this(modifier, type, genericType, methodName, async, null);
+    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async, Generator generator) {
+        this(modifier, type, genericType, methodName, async, generator, null);
     }
 
-    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async, String verb) {
-        super(modifier, type, methodName, null);
+    public MethodDescriptor(int modifier, Type type, Type genericType, String methodName, boolean async, Generator generator, String verb) {
+        super(modifier, type, methodName, null, generator.getClassMap());
         this.genericType = genericType;
         this.async = async;
         this.verb = verb;

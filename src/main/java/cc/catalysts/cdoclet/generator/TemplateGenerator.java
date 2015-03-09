@@ -16,8 +16,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TemplateGenerator implements Generator {
+    private static final Map<String, String> classMap = new HashMap<String, String>();
 
     private Collection<TypeDescriptor> typeDescriptors = new ArrayList<TypeDescriptor>();
 
@@ -118,6 +121,10 @@ public class TemplateGenerator implements Generator {
         typeMap.addGenericTypeMapping("java.util.Set", "System.Collections.Generic.ICollection");
     }
 
+    public Map<String, String> getClassMap() {
+        return classMap;
+    }
+
     public TypeMap getAnnotationMap() {
         return annotationMap;
     }
@@ -180,7 +187,7 @@ public class TemplateGenerator implements Generator {
 
 
     public void addField(Type classType, int modifier, Type fieldType, String propertyName, Object value, String comment) {
-        fieldDescriptor = new FieldDescriptor(modifier, fieldType, propertyName, value);
+        fieldDescriptor = new FieldDescriptor(modifier, fieldType, propertyName, value, getClassMap());
         setFieldDescription(comment);
 
         typeDescriptor.addFieldDescriptor(fieldDescriptor);
@@ -194,16 +201,13 @@ public class TemplateGenerator implements Generator {
 
     public void addParameter(Type classType, Type methodType, Type type, String name) {
         if (methodDescriptor != null) {
-            ParameterDescriptor parameterDescriptor = new ParameterDescriptor(type, name);
+            ParameterDescriptor parameterDescriptor = new ParameterDescriptor(type, name, getClassMap());
             methodDescriptor.addParameterDescriptor(parameterDescriptor);
         }
         if (proxyMethodDescriptor != null) {
-
-
             type = replaceType(type);
 
-
-            ParameterDescriptor parameterDescriptor = new ParameterDescriptor(type, name);
+            ParameterDescriptor parameterDescriptor = new ParameterDescriptor(type, name, getClassMap());
             proxyMethodDescriptor.addParameterDescriptor(parameterDescriptor);
         }
     }
@@ -219,22 +223,24 @@ public class TemplateGenerator implements Generator {
             }
         }
 
-        return new Type(type.getName(), arguments, type.getBounds(), type.getDimensions(), type.isGeneric());
+        return new Type(type.getName(), arguments, type.getBounds(), type.getDimensions(), type.isGeneric(), getClassMap());
     }
 
 
     public void beginClass(Type type) {
-        beginType(new ClassDescriptor(type, type.getName() + suffix));
+        getClassMap().put(type.getName(), type.getName() + suffix);
+
+        beginType(new ClassDescriptor(type, getClassMap()));
     }
 
 
     public void beginEnum(Type type) {
-        beginType(new EnumDescriptor(type));
+        beginType(new EnumDescriptor(type, getClassMap()));
     }
 
 
     public void beginGetter(Type classType, Type methodType, int modifier, Type returnType, String propertyName, String description, boolean override) {
-        propertyDescriptor = new PropertyDescriptor(modifier, returnType, methodType, propertyName);
+        propertyDescriptor = new PropertyDescriptor(modifier, returnType, methodType, propertyName, getClassMap());
         propertyDescriptor.setGetter(true);
         propertyDescriptor.setOverride(override);
         propertyDescriptor.setDescription(description);
@@ -247,7 +253,7 @@ public class TemplateGenerator implements Generator {
 
 
     public void beginInterface(Type type) {
-        beginType(new InterfaceDescriptor(type));
+        beginType(new InterfaceDescriptor(type, getClassMap()));
     }
 
 
@@ -257,19 +263,19 @@ public class TemplateGenerator implements Generator {
 
     public void beginMethod(Type classType, Type methodType, int modifier, Type returnType, String methodName, boolean asnyc, boolean override, String verb) {
         if (typeDescriptor != null) {
-            methodDescriptor = new MethodDescriptor(modifier, returnType, methodType, methodName, asnyc);
+            methodDescriptor = new MethodDescriptor(modifier, returnType, methodType, methodName, asnyc, this);
             methodDescriptor.setOverride(override);
             typeDescriptor.addMethodDescriptor(methodDescriptor);
         }
         if (proxyTypeDescriptor != null) {
-            proxyMethodDescriptor = new MethodDescriptor(modifier, returnType, methodType, methodName, asnyc, verb);
+            proxyMethodDescriptor = new MethodDescriptor(modifier, returnType, methodType, methodName, asnyc, this, verb);
             proxyTypeDescriptor.addMethodDescriptor(proxyMethodDescriptor);
         }
     }
 
 
     public void beginProxy(Type proxy, Type baseType, Type interfaceType) {
-        proxyTypeDescriptor = new ProxyDescriptor(proxy);
+        proxyTypeDescriptor = new ProxyDescriptor(proxy, getClassMap());
         proxyTypeDescriptor.addInterface(interfaceType);
 
         if (baseType != Type.NULL) proxyTypeDescriptor.setSuperclass(baseType);
@@ -279,7 +285,7 @@ public class TemplateGenerator implements Generator {
 
 
     public void beginSetter(Type classType, Type methodType, int modifier, Type returnType, String propertyName, String description, boolean override) {
-        propertyDescriptor = new PropertyDescriptor(modifier, returnType, methodType, propertyName);
+        propertyDescriptor = new PropertyDescriptor(modifier, returnType, methodType, propertyName, getClassMap());
         propertyDescriptor.setSetter(true);
         propertyDescriptor.setOverride(override);
         propertyDescriptor.setDescription(description);

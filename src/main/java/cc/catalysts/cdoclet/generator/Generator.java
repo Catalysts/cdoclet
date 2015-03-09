@@ -4,6 +4,7 @@ import cc.catalysts.cdoclet.map.TypeMap;
 import com.sun.javadoc.ClassDoc;
 
 import java.lang.annotation.Annotation;
+import java.util.Map;
 
 public interface Generator {
     void addAnnotation(Type annotation);
@@ -53,6 +54,8 @@ public interface Generator {
     void endSetter();
 
     void generate() throws Exception;
+
+    Map<String, String> getClassMap();
 
     TypeMap getAnnotationMap();
 

@@ -8,7 +8,7 @@ package $typeDescriptor.nameSpace;
  * $typeDescriptor.description
  */
 #end
-#foreach($annotation in $typeDescriptor.annotations)@$annotation.name
+#foreach($annotation in $typeDescriptor.annotations)@$annotation.qualifiedTypeName
 #end
 public enum $typeDescriptor.typeName#java_generics($typeDescriptor)#java_bounds($typeDescriptor) {#foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)#if($velocityCount>1),#end
 

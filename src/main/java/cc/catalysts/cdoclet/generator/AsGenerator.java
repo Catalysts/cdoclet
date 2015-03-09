@@ -16,6 +16,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 import static cc.catalysts.cdoclet.generator.Languages.ACTIONSCRIPT;
@@ -37,6 +39,7 @@ public class AsGenerator implements Generator {
     private ASMethod method;
     private ASMethod proxyMethod;
 
+    private final Map<String, String> classMap = new HashMap<String, String>();
     private final TypeMap annotationMap;
     private final TypeMap annotationTypeMap;
     private final TypeMap packageMap;
@@ -119,9 +122,9 @@ public class AsGenerator implements Generator {
 
     public void addAnnotation(Type tag) {
         if (method != null) {
-            method.newMetaTag(tag.getName());
+            method.newMetaTag(tag.getQualifiedTypeName());
         } else {
-            type.newMetaTag(tag.getName());
+            type.newMetaTag(tag.getQualifiedTypeName());
         }
     }
 
@@ -135,7 +138,7 @@ public class AsGenerator implements Generator {
     public void addConstant(Type classType, Type constantType, String name, String initializer, String comment) {
         if (type instanceof ASClassType) {
             // actionscript/metaas doesn't support constants in interfaces
-            createConst((ASClassType) type, name, initializer, constantType.getName(), comment);
+            createConst((ASClassType) type, name, initializer, constantType.getQualifiedTypeName(), comment);
         }
     }
 
@@ -152,44 +155,48 @@ public class AsGenerator implements Generator {
 
         ASClassType asClassType = (ASClassType) type;
         if (asClassType.getField(fieldName) == null)
-            asClassType.newField(fieldName, getVisibility(modifier), fieldType.getName());
+            asClassType.newField(fieldName, getVisibility(modifier), fieldType.getQualifiedTypeName());
     }
 
 
     public void addInterface(Type name) {
         if (type instanceof ASInterfaceType) {
             ASInterfaceType interfaceType = (ASInterfaceType) type;
-            interfaceType.addSuperInterface(name.getName());
+            interfaceType.addSuperInterface(name.getQualifiedTypeName());
         } else {
             ASClassType classType = (ASClassType) type;
-            classType.addImplementedInterface(name.getName());
+            classType.addImplementedInterface(name.getQualifiedTypeName());
         }
-        addImport(name.getName());
+        addImport(name.getQualifiedTypeName());
     }
 
 
     public void addParameter(Type classType, Type methodType, Type type, String name) {
         type = resolveTypeArguments(classType, methodType, type);
 
-        if (method != null) method.addParam(name, type.getName());
-        if (proxyMethod != null) proxyMethod.addParam(name, type.getName());
+        if (method != null) method.addParam(name, type.getQualifiedTypeName());
+        if (proxyMethod != null) proxyMethod.addParam(name, type.getQualifiedTypeName());
 
-        addImport(type.getName());
+        addImport(type.getQualifiedTypeName());
     }
 
 
     public void beginClass(Type classType) {
         logger.info("Creating ActionScript class {}", classType);
 
-        newClass(classType.getName() + suffix, false);
-        addAnnotation(GeneratorUtils.getType("RemoteClass(alias=\"" + classType.getName() + "\")", this));
+        if (suffix != null) {
+            getClassMap().put(classType.getName(), classType.getName() + suffix);
+        }
+
+        newClass(classType.getQualifiedTypeName(), false);
+        addAnnotation(GeneratorUtils.getType("RemoteClass(alias=\"" + classType.getQualifiedTypeName() + "\")", this));
     }
 
 
     public void beginEnum(Type name) {
         logger.info("Creating ActionScript enumeration {}", name);
 
-        newClass(name.getName(), true);
+        newClass(name.getQualifiedTypeName(), true);
     }
 
 
@@ -211,7 +218,7 @@ public class AsGenerator implements Generator {
     public void beginInterface(Type name) {
         logger.info("Creating ActionScript interface {}", name);
 
-        unit = project.newInterface(name.getName());
+        unit = project.newInterface(name.getQualifiedTypeName());
         type = unit.getType();
         imports = new TreeSet<String>();
     }
@@ -225,7 +232,7 @@ public class AsGenerator implements Generator {
         returnType = resolveTypeArguments(classType, methodType, returnType);
 
         if (unit != null) {
-            method = type.newMethod(methodName, getVisibility(modifier), returnType.getName());
+            method = type.newMethod(methodName, getVisibility(modifier), returnType.getQualifiedTypeName());
             method.setOverride(override);
         }
 
@@ -243,31 +250,31 @@ public class AsGenerator implements Generator {
 
             if (!hasField) {
                 createConst(eventType, proxyMethodName, MessageFormat.format("\"{0}\"", methodName), "String", null);
-                proxyMethod = proxyType.newMethod(methodName, Visibility.PUBLIC, returnType.getName());
+                proxyMethod = proxyType.newMethod(methodName, Visibility.PUBLIC, returnType.getQualifiedTypeName());
             }
         }
 
-        addImport(returnType.getName());
+        addImport(returnType.getQualifiedTypeName());
     }
 
 
     public void beginProxy(Type proxy, Type baseType, Type interfaceType) {
-        logger.info("Creating ActionScript proxy {}", proxy.getName());
+        logger.info("Creating ActionScript proxy {}", proxy.getQualifiedTypeName());
 
-        ASCompilationUnit eventUnit = project.newClass(proxy.getName() + "Events");
-        proxyUnit = project.newClass(proxy.getName());
+        ASCompilationUnit eventUnit = project.newClass(proxy.getQualifiedTypeName() + "Events");
+        proxyUnit = project.newClass(proxy.getQualifiedTypeName());
 
         eventType = (ASClassType) eventUnit.getType();
         proxyType = (ASClassType) proxyUnit.getType();
 
-        proxyType.addImplementedInterface(interfaceType.getName());
+        proxyType.addImplementedInterface(interfaceType.getQualifiedTypeName());
 
         proxyImports = new TreeSet<String>();
-        proxyImports.add(interfaceType.getName());
+        proxyImports.add(interfaceType.getQualifiedTypeName());
 
         if (baseType != Type.NULL) {
-            proxyType.setSuperclass(baseType.getName());
-            proxyImports.add(baseType.getName());
+            proxyType.setSuperclass(baseType.getQualifiedTypeName());
+            proxyImports.add(baseType.getQualifiedTypeName());
         }
 
         ASMethod callMethod = proxyType.newMethod(Constants.METHOD_CALL, Visibility.PROTECTED, "Object");
@@ -275,10 +282,10 @@ public class AsGenerator implements Generator {
         callMethod.addParam("...args", null);
         callMethod.addStmt("throw new Error(\"Not Implemented\");");
 
-        ASMethod resultMethod = proxyType.newMethod(Constants.METHOD_ON_RESULT, Visibility.PROTECTED, Type.VOID.getName());
+        ASMethod resultMethod = proxyType.newMethod(Constants.METHOD_ON_RESULT, Visibility.PROTECTED, Type.VOID.getQualifiedTypeName());
         resultMethod.addParam("result", "Object");
 
-        ASMethod statusMethod = proxyType.newMethod(Constants.METHOD_ON_STATUS, Visibility.PROTECTED, Type.VOID.getName());
+        ASMethod statusMethod = proxyType.newMethod(Constants.METHOD_ON_STATUS, Visibility.PROTECTED, Type.VOID.getQualifiedTypeName());
         statusMethod.addParam("status", "Object");
     }
 
@@ -289,11 +296,11 @@ public class AsGenerator implements Generator {
         if (type instanceof ASClassType) {
             addField(classType, Modifier.PRIVATE, fieldType, "_" + propertyName, null, null);
             beginMethod(classType, Type.EMPTY, modifier, Type.VOID, "set " + propertyName, false, override);
-            method.addParam("value", fieldType.getName());
+            method.addParam("value", fieldType.getQualifiedTypeName());
             method.addStmt("_" + propertyName + "=value;");
         } else {
             beginMethod(classType, Type.EMPTY, modifier, Type.VOID, "set " + propertyName, false, override);
-            method.addParam("value", fieldType.getName());
+            method.addParam("value", fieldType.getQualifiedTypeName());
         }
 
         setMethodDescription(comment);
@@ -359,6 +366,11 @@ public class AsGenerator implements Generator {
         project.writeAll();
     }
 
+    @Override
+    public Map<String, String> getClassMap() {
+        return classMap;
+    }
+
 
     public String getName() {
         return ACTIONSCRIPT;
@@ -382,8 +394,8 @@ public class AsGenerator implements Generator {
 
 
     public void setSuperclass(Type name, boolean exception) {
-        ((ASClassType) type).setSuperclass(name.getName());
-        addImport(name.getName());
+        ((ASClassType) type).setSuperclass(name.getQualifiedTypeName());
+        addImport(name.getQualifiedTypeName());
     }
 
 
@@ -448,20 +460,20 @@ public class AsGenerator implements Generator {
     private Type resolveTypeArguments(Type classType, Type methodType, Type type) {
         if (!type.isGeneric()) return type;
 
-        String name = type.getName();
+        String name = type.getQualifiedTypeName();
         if (methodType != null && methodType.getBounds() != null && methodType.getBounds().containsKey(name)) {
-            Type returnType = methodType.getBounds().get(type.getName());
+            Type returnType = methodType.getBounds().get(type.getQualifiedTypeName());
             if (returnType != null) {
-                name = type.getName();
+                name = type.getQualifiedTypeName();
                 addImport(name);
                 return returnType;
             }
         }
 
         if (classType != null && classType.getBounds() != null && classType.getBounds().containsKey(name)) {
-            Type returnType = classType.getBounds().get(type.getName());
+            Type returnType = classType.getBounds().get(type.getQualifiedTypeName());
             if (returnType != null) {
-                name = type.getName();
+                name = type.getQualifiedTypeName();
                 addImport(name);
                 return returnType;
             }

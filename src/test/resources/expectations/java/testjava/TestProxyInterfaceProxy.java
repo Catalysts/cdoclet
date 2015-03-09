@@ -10,8 +10,8 @@ package testjava;
         }
 
 		
-	public void baz(long ago) {
-			DispatchCall(typeof(object), "baz", ago);
+	public testjava.TestBeanDto baz(long ago) {
+			return (<testjava.TestBeanDto>) DispatchCall(typeof<testjava.TestBeanDto), "baz", ago);
 		}
 	}
 }

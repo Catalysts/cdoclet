@@ -3,6 +3,7 @@ package cc.catalysts.cdoclet.generator.velocity;
 import cc.catalysts.cdoclet.generator.Type;
 
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 /**
  * @author Catalysts Gmbh
@@ -12,8 +13,8 @@ public class FieldDescriptor extends Descriptor {
 	private Object value;
 	private int modifier;
 
-	public FieldDescriptor(int modifier, Type type, String fieldName, Object value) {
-		super(type, type.getName());
+	public FieldDescriptor(int modifier, Type type, String fieldName, Object value, Map<String, String> classMap) {
+		super(type, classMap);
 
 		this.fieldName = fieldName;
 		this.value = value;

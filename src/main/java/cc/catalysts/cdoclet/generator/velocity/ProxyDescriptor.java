@@ -2,13 +2,15 @@ package cc.catalysts.cdoclet.generator.velocity;
 
 import cc.catalysts.cdoclet.generator.Type;
 
-public class ProxyDescriptor extends ClassDescriptor {
-	public ProxyDescriptor(Type type) {
-		super(type, type.getName());
-	}
+import java.util.Map;
 
-	@Override
-	public String getTemplate() {
-		return "proxy.vm";
-	}
+public class ProxyDescriptor extends ClassDescriptor {
+    public ProxyDescriptor(Type type, Map<String, String> classMap) {
+        super(type, classMap);
+    }
+
+    @Override
+    public String getTemplate() {
+        return "proxy.vm";
+    }
 }

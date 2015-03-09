@@ -1,6 +1,7 @@
 package test;
 
 /**
+ * @cs.class
  * @java.class
  */
 public class TestBean {
@@ -22,5 +23,9 @@ public class TestBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public TestBean getSelf() {
+        return this;
     }
 }

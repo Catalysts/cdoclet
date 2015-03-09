@@ -27,6 +27,6 @@ public class JSGeneratorTest extends AbstractGeneratorTest {
 
     @Override
     protected String getOutputDir() {
-        return "test/results/js/test/";
+        return "test/results/js/testjs/";
     }
 }

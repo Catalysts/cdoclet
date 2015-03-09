@@ -7,5 +7,5 @@ package testjava;
 public interface TestProxyInterface extends testjava.TestProxyInterfaceBase<java.sql.Date> {
     String NAME = "test";
 
-	void baz(long ago);
+	testjava.TestBeanDto baz(long ago);
 }

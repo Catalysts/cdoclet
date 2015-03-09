@@ -3,6 +3,7 @@ package cc.catalysts.cdoclet.generator.velocity;
 import cc.catalysts.cdoclet.generator.Type;
 
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 /**
  * @author Catalysts Gmbh
@@ -15,8 +16,8 @@ public class PropertyDescriptor extends Descriptor {
 	private boolean override;
 	private Type genericType;
 
-	public PropertyDescriptor(int modifier, Type type, Type genericType, String fieldName) {
-		super(type, type.getName());
+	public PropertyDescriptor(int modifier, Type type, Type genericType, String fieldName, Map<String, String> classMap) {
+		super(type, classMap);
 
 		this.modifier = modifier;
 		this.genericType = genericType;

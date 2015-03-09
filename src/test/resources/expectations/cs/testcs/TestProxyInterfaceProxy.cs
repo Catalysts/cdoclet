@@ -10,8 +10,8 @@ namespace testcs {
         protected virtual void BeginDispatchCall(System.Type type, string methodName, object async, params object[] args) {
         }
 
-		virtual public void Baz(AsyncCallback async, long ago) {
-			BeginDispatchCall(typeof(object), "baz", async, ago);
+		virtual public void Baz(AsyncCallback<testcs.TestBeanDto> async, long ago) {
+			BeginDispatchCall(typeof(testcs.TestBeanDto), "baz", async, ago);
 		}
 	}
 #endregion
