@@ -8,26 +8,28 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class Type {
-    public static final Type EMPTY = new Type("", null, null, 0, false, null);
-    public static final Type NULL = new Type("null", null, null, 0, false, null);
-    public static final Type VOID = new Type("void", null, null, 0, false, null);
+    public static final Type EMPTY = new Type("", null, null, 0, false, false, null);
+    public static final Type NULL = new Type("null", null, null, 0, false, false, null);
+    public static final Type VOID = new Type("void", null, null, 0, false, false, null);
 
     private final String name;
     private final Collection<Type> arguments;
     private final Map<String, Type> bounds;
     private final int dimensions;
+    private final boolean _abstract;
     private final boolean generic;
     private final Map<String, String> classMap;
 
     private Map<String, Type> typeMap;
 
-    public Type(String name, Collection<Type> arguments, Map<String, Type> bounds, int dimensions, boolean generic, Map<String, String> classMap) {
+    public Type(String name, Collection<Type> arguments, Map<String, Type> bounds, int dimensions, boolean _abstract, boolean generic, Map<String, String> classMap) {
         if (name == null) throw new IllegalArgumentException("name");
 
         this.name = name;
         this.arguments = arguments;
         this.bounds = bounds;
         this.dimensions = dimensions;
+        this._abstract = _abstract;
         this.generic = generic;
         this.classMap = classMap;
     }
@@ -115,5 +117,9 @@ public class Type {
 
     public String getTypeName() {
         return ClassUtils.getShortClassName(getQualifiedTypeName());
+    }
+
+    public boolean isAbstract() {
+        return _abstract;
     }
 }

@@ -105,9 +105,9 @@ public class InterfaceHandler extends AbstractHandler {
                         if (!cc.catalysts.cdoclet.generator.Type.VOID.getQualifiedTypeName().equals(returnType.getQualifiedTypeName()))
                             arguments.add(returnType);
 
-                        asyncType = new cc.catalysts.cdoclet.generator.Type(callbackType.substring(0, callbackType.length() - 8), arguments, null, 0, false, getGenerator().getClassMap());
+                        asyncType = new cc.catalysts.cdoclet.generator.Type(callbackType.substring(0, callbackType.length() - 8), arguments, null, 0, false, false, getGenerator().getClassMap());
                     } else {
-                        asyncType = new cc.catalysts.cdoclet.generator.Type(callbackType, null, null, 0, false, getGenerator().getClassMap());
+                        asyncType = new cc.catalysts.cdoclet.generator.Type(callbackType, null, null, 0, false, false, getGenerator().getClassMap());
                     }
 
                     asyncType.setTypeMap(typeMap);

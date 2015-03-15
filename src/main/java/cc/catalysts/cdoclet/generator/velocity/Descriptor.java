@@ -15,7 +15,7 @@ public class Descriptor extends Type {
     private Collection<Type> superclass = new ArrayList<Type>();
 
     public Descriptor(Type type, Map<String, String> classMap) {
-        super(type.getName(), type.getArguments(), type.getBounds(), type.getDimensions(), type.isGeneric(), classMap);
+        super(type.getName(), type.getArguments(), type.getBounds(), type.getDimensions(), type.isAbstract(), type.isGeneric(), classMap);
     }
 
     public Collection<Type> getAnnotations() {

@@ -13,7 +13,7 @@ namespace $typeDescriptor.nameSpace {
 #end
 #foreach($annotation in $typeDescriptor.annotations)	[$annotation.qualifiedTypeName]
 #end
-	public class $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
+	public#if($typeDescriptor.abstract) abstract#end class $typeDescriptor.typeName#cs_generics($typeDescriptor)#cs_implements($typeDescriptor)#cs_bounds($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
 #if($fieldDescriptor.description)		/**
 		 * <summary>

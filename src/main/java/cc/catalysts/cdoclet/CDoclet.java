@@ -27,6 +27,7 @@ import java.util.Arrays;
  */
 public class CDoclet {
     private static final String PARAM_DESTINATION = "-d";
+    private static final String PARAM_ENCODING = "-encoding";
     private static final String PARAM_NAMESPACE = "-namespace";
     private static final String PARAM_GENERATOR = "-generator";
     private static final String PARAM_ENUM = "-enum";
@@ -80,6 +81,7 @@ public class CDoclet {
     @SuppressWarnings({"unchecked"})
     private static Generator readOptions(String[][] options) throws Exception {
         String destination = ".";
+        String encoding = "UTF-8";
         String namespace = null;
         String generator = null;
         String suffix = null;
@@ -93,6 +95,8 @@ public class CDoclet {
         for (String[] opt : options) {
             if (opt[0].equals(PARAM_DESTINATION)) {
                 destination = opt[1];
+            } else if (opt[0].equals(PARAM_ENCODING)) {
+                encoding = opt[1];
             } else if (opt[0].equals(PARAM_NAMESPACE)) {
                 namespace = opt[1];
             } else if (opt[0].equals(PARAM_GENERATOR)) {
@@ -126,7 +130,7 @@ public class CDoclet {
         if (Languages.ACTIONSCRIPT.equals(generator)) {
             return new AsGenerator(destination, namespace, suffix, enumAnnotation, typeMap, packageMap, annotationTypeMap, annotationMap);
         } else if (Languages.CSHARP.equals(generator) || Languages.JAVA.equals(generator) || Languages.JAVASCRIPT.equals(generator)) {
-            return new TemplateGenerator(destination, namespace, generator, suffix, enumAnnotation, typeMap, packageMap, annotationTypeMap, annotationMap);
+            return new TemplateGenerator(destination, encoding, namespace, generator, suffix, enumAnnotation, typeMap, packageMap, annotationTypeMap, annotationMap);
         }
 
         return null;

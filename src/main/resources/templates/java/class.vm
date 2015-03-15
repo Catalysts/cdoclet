@@ -10,7 +10,7 @@ package $typeDescriptor.nameSpace;
 #end
 #foreach($annotation in $typeDescriptor.annotations)@$annotation.qualifiedTypeName
 #end
-public class $typeDescriptor.typeName#java_generics($typeDescriptor)#java_implements($typeDescriptor) {
+public#if($typeDescriptor.abstract) abstract#end class $typeDescriptor.typeName#java_generics($typeDescriptor)#java_implements($typeDescriptor) {
 #foreach($fieldDescriptor in $typeDescriptor.fieldDescriptors)
 #if(!$fieldDescriptor.override)
 #if($fieldDescriptor.description)	/**

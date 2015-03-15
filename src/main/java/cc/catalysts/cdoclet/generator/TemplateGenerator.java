@@ -33,6 +33,7 @@ public class TemplateGenerator implements Generator {
     private PropertyDescriptor propertyDescriptor;
 
     private final File destination;
+    private final String encoding;
     private final String language;
     private final String namespace;
     private final String suffix;
@@ -43,8 +44,9 @@ public class TemplateGenerator implements Generator {
     private final TypeMap typeMap;
     private final Class<? extends Annotation> enumAnnotation;
 
-    public TemplateGenerator(String destination, String namespace, String language, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap packageMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
+    public TemplateGenerator(String destination, String encoding, String namespace, String language, String suffix, Class<? extends Annotation> enumAnnotation, TypeMap typeMap, TypeMap packageMap, TypeMap annotationTypeMap, TypeMap annotationMap) throws Exception {
         this.destination = new File(destination);
+        this.encoding = encoding;
         this.namespace = namespace;
         this.language = language;
         this.suffix = suffix;
@@ -223,7 +225,7 @@ public class TemplateGenerator implements Generator {
             }
         }
 
-        return new Type(type.getName(), arguments, type.getBounds(), type.getDimensions(), type.isGeneric(), getClassMap());
+        return new Type(type.getName(), arguments, type.getBounds(), type.getDimensions(), false, type.isGeneric(), getClassMap());
     }
 
 
@@ -356,7 +358,7 @@ public class TemplateGenerator implements Generator {
 
             VelocityContext context = new VelocityContext();
             String s = descriptor.getTemplate();
-            Template template = Velocity.getTemplate("templates/" + language + "/" + s);
+            Template template = Velocity.getTemplate("templates/" + language + "/" + s, encoding);
 
             context.put("typeDescriptor", descriptor);
             template.merge(context, writer);

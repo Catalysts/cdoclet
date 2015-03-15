@@ -6,7 +6,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 group = 'cc.catalysts'
-version = '2.1.4'
+version = '2.2.0'
 
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'

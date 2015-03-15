@@ -32,7 +32,7 @@ public final class GeneratorUtils {
         name = generator.getPackageMap().getType(name, !arguments.isEmpty(), false);
 
         if ("null".equals(name)) return cc.catalysts.cdoclet.generator.Type.NULL;
-        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(name, arguments, bounds, 0, true, generator.getClassMap()));
+        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(name, arguments, bounds, 0, false, true, generator.getClassMap()));
     }
 
     private static void processArgument(Type argument, Generator generator, Collection<cc.catalysts.cdoclet.generator.Type> arguments, Map<String, cc.catalysts.cdoclet.generator.Type> bounds, Collection<String> ignore, Collection<String> visited) {
@@ -58,6 +58,7 @@ public final class GeneratorUtils {
 
         Map<String, cc.catalysts.cdoclet.generator.Type> bounds = new HashMap<String, cc.catalysts.cdoclet.generator.Type>();
         Collection<cc.catalysts.cdoclet.generator.Type> arguments = new ArrayList<cc.catalysts.cdoclet.generator.Type>();
+        boolean _abstract = false;
 
         if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = type.asParameterizedType();
@@ -68,6 +69,8 @@ public final class GeneratorUtils {
         } else if (type instanceof ClassDoc) {
             ClassDoc classDoc = type.asClassDoc();
             logger.debug("Parameters {}", Arrays.toString(classDoc.typeParameters()));
+
+            _abstract = classDoc.isAbstract();
             for (Type argument : classDoc.typeParameters()) {
                 processArgument(argument, generator, arguments, bounds, ignore, visited);
             }
@@ -82,7 +85,7 @@ public final class GeneratorUtils {
             bounds.clear();
             name = name.substring(0, name.length() - 2);
         }
-        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(name, arguments, bounds, getDimensions(type), type instanceof TypeVariable, generator.getClassMap()));
+        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(name, arguments, bounds, getDimensions(type), _abstract, type instanceof TypeVariable, generator.getClassMap()));
     }
 
     private static cc.catalysts.cdoclet.generator.Type getEnumerationType(Type enumerationType, Generator generator) {
@@ -149,7 +152,7 @@ public final class GeneratorUtils {
         if (type == null) return null;
         if ("null".equals(type)) return cc.catalysts.cdoclet.generator.Type.NULL;
         type = generator.getPackageMap().getType(type, false, false);
-        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(type, null, null, 0, false, generator.getClassMap()));
+        return generator.postProcessType(new cc.catalysts.cdoclet.generator.Type(type, null, null, 0, false, false, generator.getClassMap()));
     }
 
     public static cc.catalysts.cdoclet.generator.Type getType(String name, Generator generator) {
