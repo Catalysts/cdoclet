@@ -18,13 +18,13 @@ function ${typeDescriptor.typeName}($http) {
 #end
 ${typeDescriptor.typeName}.prototype.$methodDescriptor.methodName = #js_method($methodDescriptor) {
 #if($methodDescriptor.async)#if($methodDescriptor.callbackType.qualifiedTypeName == "void")
-    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", #js_param_object($methodDescriptor));
 #else
-    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.beginDispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", #js_param_object($methodDescriptor));
 #end#else#if($methodDescriptor.qualifiedTypeName == "void")
-    this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", #js_param_object($methodDescriptor));
 #else
-    return this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", [#foreach($parameterDescriptor in $methodDescriptor.parameterDescriptors)#if($velocityCount>1), #end$parameterDescriptor.parameterName#end]);
+    return this.dispatchCall("${methodDescriptor.verb}", "${methodDescriptor.methodName}", #js_param_object($methodDescriptor));
 #end#end
 };
 #end

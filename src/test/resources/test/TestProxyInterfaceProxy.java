@@ -14,5 +14,5 @@ public interface TestProxyInterface extends TestProxyInterfaceBase<Date> {
     /**
      * @js.method verb=POST
      */
-    TestBean baz(long ago);
+    TestBean baz(long ago, String value);
 }
