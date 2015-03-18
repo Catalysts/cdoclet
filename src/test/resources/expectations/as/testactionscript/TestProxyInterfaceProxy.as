@@ -10,8 +10,8 @@ package  testactionscript{
 		}
 		protected function onStatus(status:Object):void {
 		}
-		public function baz(ago:Number):testactionscript.TestBean {
-			return dispatchCall(TestProxyInterfaceProxyEvents.Baz, ago) as testactionscript.TestBean;
+		public function baz(ago:Number, value:String):testactionscript.TestBean {
+			return dispatchCall(TestProxyInterfaceProxyEvents.Baz, ago, value) as testactionscript.TestBean;
 		}
 		public function foo(bar:Date):Array {
 			return dispatchCall(TestProxyInterfaceProxyEvents.Foo, bar) as Array;
